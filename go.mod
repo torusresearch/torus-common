@@ -1,4 +1,4 @@
-module torusresearch/torus-common
+module github.com/torusresearch/torus-common
 
 go 1.12
 
