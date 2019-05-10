@@ -1,15 +1,15 @@
 # github.com/allegro/bigcache v1.2.0
 github.com/allegro/bigcache
 github.com/allegro/bigcache/queue
-# github.com/aristanetworks/goarista v0.0.0-20190409234242-46f4bc7b73ef
+# github.com/aristanetworks/goarista v0.0.0-20190429220743-799535f6f364
 github.com/aristanetworks/goarista/monotime
 # github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
 github.com/beorn7/perks/quantile
-# github.com/btcsuite/btcd v0.0.0-20190410025418-9bfb2ca0346b
+# github.com/btcsuite/btcd v0.0.0-20190427004231-96897255fd17
 github.com/btcsuite/btcd/btcec
 # github.com/deckarep/golang-set v1.7.1
 github.com/deckarep/golang-set
-# github.com/ethereum/go-ethereum v1.8.20
+# github.com/ethereum/go-ethereum v1.8.27
 github.com/ethereum/go-ethereum
 github.com/ethereum/go-ethereum/accounts/abi
 github.com/ethereum/go-ethereum/accounts/abi/bind
@@ -21,7 +21,6 @@ github.com/ethereum/go-ethereum/crypto
 github.com/ethereum/go-ethereum/accounts/keystore
 github.com/ethereum/go-ethereum/log
 github.com/ethereum/go-ethereum/common/hexutil
-github.com/ethereum/go-ethereum/crypto/sha3
 github.com/ethereum/go-ethereum/params
 github.com/ethereum/go-ethereum/rlp
 github.com/ethereum/go-ethereum/trie
@@ -73,10 +72,10 @@ github.com/syndtr/goleveldb/leveldb/journal
 github.com/syndtr/goleveldb/leveldb/memdb
 github.com/syndtr/goleveldb/leveldb/storage
 github.com/syndtr/goleveldb/leveldb/table
-# golang.org/x/crypto v0.0.0-20190411191339-88737f569e3a
+# golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734
 golang.org/x/crypto/sha3
 golang.org/x/crypto/pbkdf2
 golang.org/x/crypto/scrypt
-# golang.org/x/sys v0.0.0-20190415081028-16da32be82c5
+# golang.org/x/sys v0.0.0-20190412213103-97732733099d
 golang.org/x/sys/cpu
 golang.org/x/sys/unix
