@@ -9,4 +9,8 @@ steps:
 - name: test
   image: golang
   commands:
-  - go test -cover ./logging ./telemetry
+  - go test -cover ./logging ./telemetry ./eth
+
+services:
+  - name: ganache
+    image: trufflesuite/ganache-cli/

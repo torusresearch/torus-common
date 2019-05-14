@@ -21,10 +21,9 @@ func TestDeployNodelist(t *testing.T) {
 	blockchain := backends.NewSimulatedBackend(alloc, 0)
 
 	//Deploy contract
-	address, _, _, err := DeployNodelist(
+	address, _, _, err := DeployNodeList(
 		auth,
 		blockchain,
-		"Hello World",
 	)
 	// commit all pending transactions
 	blockchain.Commit()
