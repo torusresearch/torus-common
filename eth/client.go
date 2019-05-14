@@ -23,7 +23,7 @@ func (e *EthClient) NodeListContract(nodeListAddress common.Address) *NodeList {
 
 }
 
-func (e *EthClient) NodeListContractFromStringString(contractAddress string) *NodeList {
+func (e *EthClient) NodeListContractFromAddressString(contractAddress string) *NodeList {
 	nodeListAddress := common.HexToAddress(contractAddress)
 	return e.NodeListContract(nodeListAddress)
 
