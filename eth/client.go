@@ -13,6 +13,10 @@ type EthClient struct {
 	ethclient *ethclient.Client
 }
 
+func (e *EthClient) Client() *ethclient.Client {
+	return e.ethclient
+}
+
 func (e *EthClient) NodeListContract(nodeListAddress common.Address) *NodeList {
 	NodeListContract, err := NewNodeList(nodeListAddress, e.ethclient)
 	if err != nil {

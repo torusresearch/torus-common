@@ -99,6 +99,8 @@ contract NodeList is Ownable {
 
   mapping (address => Details) public nodeDetails;
 
+  mapping (uint256 => mapping (uint256 => uint256)) public pssStatus;
+
   constructor() public {
   }
 
@@ -124,14 +126,21 @@ contract NodeList is Ownable {
   }
 
   modifier whitelisted(uint256 epoch) {
-    require(IsWhitelisted(epoch, msg.sender));
+    require(isWhitelisted(epoch, msg.sender));
     _;
   }
 
-  function IsWhitelisted(uint256 epoch, address nodeAddress) public view returns (bool) {
+  function getPssStatus(uint256 oldEpoch, uint256 newEpoch) public view returns (uint256) {
+    return pssStatus[oldEpoch][newEpoch];
+  }
+
+  function isWhitelisted(uint256 epoch, address nodeAddress) public view returns (bool) {
     return whitelist[epoch][nodeAddress];
   }
 
+  function updatePssStatus(uint256 oldEpoch, uint256 newEpoch, uint256 status) public onlyOwner epochValid(oldEpoch) epochValid(newEpoch) {
+    pssStatus[oldEpoch][newEpoch] = status;
+  }
 
   function updateWhitelist(uint256 epoch, address nodeAddress, bool allowed) public onlyOwner epochValid(epoch) {
     whitelist[epoch][nodeAddress] = allowed;
@@ -148,8 +157,18 @@ contract NodeList is Ownable {
     return (epochI.id, epochI.n, epochI.k, epochI.t, epochI.nodeList, epochI.prevEpoch, epochI.nextEpoch);
   }
 
-  function listNode(uint256 epoch, string calldata declaredIp, uint256 pubKx, uint256 pubKy, string calldata tmP2PListenAddress, 
-    string calldata p2pListenAddress) external whitelisted(epoch) epochValid(epoch) epochCreated(epoch) {
+  function nodeRegistered(uint256 epoch, address nodeAddress) public view returns (bool) {
+    Epoch storage epochI = epochInfo[epoch];
+    for (uint256 i=0; i<epochI.nodeList.length; i++) {
+      if (epochI.nodeList[i] == nodeAddress) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function listNode(uint256 epoch, string calldata declaredIp, uint256 pubKx, uint256 pubKy, string calldata tmP2PListenAddress, string calldata p2pListenAddress) external whitelisted(epoch) epochValid(epoch) epochCreated(epoch) {
+    require(!nodeRegistered(epoch, msg.sender));
     Epoch storage epochI = epochInfo[epoch];
     epochI.nodeList.push(msg.sender); 
     nodeDetails[msg.sender] = Details({
