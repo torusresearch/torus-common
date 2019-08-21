@@ -80,26 +80,31 @@ func (l *logger) write(message string, severity LogLevel) {
 
 // Debug writes to Out with level Debug
 func (l *logger) Debug(message string) {
+	message = debugMixer(message)
 	l.write(message, DEBUG)
 }
 
 // Info writes to Out with level Info
 func (l *logger) Info(message string) {
+	message = infoMixer(message)
 	l.write(message, INFO)
 }
 
 // Warning writes to Out with level Warning
 func (l *logger) Warning(message string) {
+	message = warningMixer(message)
 	l.write(message, WARNING)
 }
 
 // Error writes to Out with level Error
 func (l *logger) Error(message string) {
+	message = errorMixer(message)
 	l.write(message, ERROR)
 }
 
 // Fatal writes to Out with level Fatal
 func (l *logger) Fatal(message string) {
+	message = fatalMixer(message)
 	l.write(message, FATAL)
 	panic(message)
 }
