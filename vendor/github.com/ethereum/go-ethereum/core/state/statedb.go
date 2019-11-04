@@ -468,9 +468,9 @@ func (self *StateDB) createObject(addr common.Address) (newobj, prev *stateObjec
 //
 // Carrying over the balance ensures that Ether doesn't disappear.
 func (self *StateDB) CreateAccount(addr common.Address) {
-	newObj, prev := self.createObject(addr)
+	new, prev := self.createObject(addr)
 	if prev != nil {
-		newObj.setBalance(prev.data.Balance)
+		new.setBalance(prev.data.Balance)
 	}
 }
 
