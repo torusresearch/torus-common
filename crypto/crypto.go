@@ -25,7 +25,7 @@ type Signature struct {
 	V    uint8
 }
 
-type Sig struct {
+type SignatureHashless struct {
 	Raw []byte
 	R   [32]byte
 	S   [32]byte
@@ -42,8 +42,7 @@ func SigToHex(ecdsaSig Signature) string {
 	return hex.EncodeToString(ecdsaSig.R[:]) + hex.EncodeToString(ecdsaSig.S[:]) + hex.EncodeToString(big.NewInt(int64(ecdsaSig.V)).Bytes())
 }
 
-// Sig contains R S V and raw format of ecdsa signature. Does not contain the hashed message
-func HexToSig(hexString string) Sig {
+func HexToSig(hexString string) SignatureHashless {
 	hexR := hexString[:64]
 	hexS := hexString[64:128]
 	hexV := hexString[128:130]
@@ -67,7 +66,7 @@ func HexToSig(hexString string) Sig {
 	copy(R32byte[:], R[:32])
 	copy(S32byte[:], S[:32])
 
-	return Sig{
+	return SignatureHashless{
 		signature,
 		R32byte,
 		S32byte,
@@ -75,9 +74,7 @@ func HexToSig(hexString string) Sig {
 	}
 }
 
-// SignData returns a hex-encoded signature of the passed in data.
-// NOTE: this function has basically been copied over from `utils.go` in
-// torus-public, however we only deal with hex encoded signatures
+// SignData returns a hex-encoded signature of the passed in data
 func SignData(data []byte, ecdsaKey *ecdsa.PrivateKey) Signature {
 	// to get data []byte from string, do secp256k1.Keccak256([]byte(messageString))
 	hashRaw := secp256k1.Keccak256(data)
@@ -110,7 +107,7 @@ func SignDataWithPubKey(body []byte, pubKeyX string, pubKeyY string, privateKey 
 	return SignData(rawData, privateKey)
 }
 
-func VerifySignature(ecdsaPubKey ecdsa.PublicKey, ecdsaSignature Signature) bool {
+func IsValidSignature(ecdsaPubKey ecdsa.PublicKey, ecdsaSignature Signature) bool {
 	r := new(big.Int)
 	s := new(big.Int)
 	r.SetBytes(ecdsaSignature.R[:])
@@ -141,27 +138,27 @@ func VerifyFromRaw(msg []byte, ecdsaPubKey ecdsa.PublicKey, signature []byte) bo
 	)
 }
 
-func VerifyPtFromRaw(msg []byte, pubKeyPt common.Point, sig []byte) bool {
+func VerifyPtFromRaw(msg []byte, pubKeyPt common.Point, signature []byte) bool {
 	ecdsaPubKey := ecdsa.PublicKey{
 		Curve: secp256k1.Curve,
 		X:     &pubKeyPt.X,
 		Y:     &pubKeyPt.Y,
 	}
 
-	return VerifyFromRaw(msg, ecdsaPubKey, sig)
+	return VerifyFromRaw(msg, ecdsaPubKey, signature)
 }
 
-func VerifyWithPubKey(body []byte, pubKeyX string, pubKeyY string, captchaPubKey common.Point, rawSig []byte) bool {
+func VerifyPtFromRawWithPubKey(body []byte, pubKeyX string, pubKeyY string, captchaPubKey common.Point, signature []byte) bool {
 	objectToVerify := signObject{
 		body,
 		pubKeyX,
 		pubKeyY,
 	}
 
-	rawData, err := bijson.Marshal(objectToVerify)
+	msg, err := bijson.Marshal(objectToVerify)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return VerifyPtFromRaw(rawData, captchaPubKey, rawSig)
+	return VerifyPtFromRaw(msg, captchaPubKey, signature)
 }
