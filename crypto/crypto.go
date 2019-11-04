@@ -148,7 +148,7 @@ func VerifyPtFromRaw(msg []byte, pubKeyPt common.Point, signature []byte) bool {
 	return VerifyFromRaw(msg, ecdsaPubKey, signature)
 }
 
-func VerifyPtFromRawWithPubKey(body []byte, pubKeyX string, pubKeyY string, captchaPubKey common.Point, signature []byte) bool {
+func VerifyPtFromRawWithPubKey(body []byte, pubKeyX string, pubKeyY string, pubKeyPt common.Point, signature []byte) bool {
 	objectToVerify := signObject{
 		body,
 		pubKeyX,
@@ -160,5 +160,5 @@ func VerifyPtFromRawWithPubKey(body []byte, pubKeyX string, pubKeyY string, capt
 		log.Fatal(err)
 	}
 
-	return VerifyPtFromRaw(msg, captchaPubKey, signature)
+	return VerifyPtFromRaw(msg, pubKeyPt, signature)
 }
