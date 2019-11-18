@@ -4,6 +4,7 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 	"math/big"
+	"math/rand"
 	"time"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -76,4 +77,24 @@ func IntChanWriteTimeout(channel chan<- int, msg int, timeout time.Duration) err
 	case timeoutCh <- true:
 		return fmt.Errorf("Channel %v with msg %v timed out after %v", channel, msg, timeout)
 	}
+}
+
+func RandIndexes(min int, max int, length int) (res []int) {
+	if max < min {
+		return
+	}
+	diff := max - min
+	rand.Seed(time.Now().UnixNano())
+	p := rand.Perm(diff)
+	for _, r := range p[:length] {
+		res = append(res, r+min)
+	}
+	return
+}
+
+type VerifierData struct {
+	Ok                   bool
+	Verifier, VerifierID string
+	TorusID              TorusID
+	Err                  error
 }

@@ -63,3 +63,22 @@ func GetColumnPoint(matrix [][]Point, index int) (res []Point) {
 	}
 	return
 }
+
+type Iterator struct {
+	RandomID string
+	CallNext func() bool
+	Val      interface{}
+	Err      error
+}
+
+func (iterator *Iterator) Next() bool {
+	return iterator.CallNext()
+}
+func (iterator *Iterator) Value() (val interface{}) {
+	return iterator.Val
+}
+
+type TorusID struct {
+	Index      int
+	KeyIndexes []big.Int
+}

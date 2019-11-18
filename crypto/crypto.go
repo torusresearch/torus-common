@@ -7,8 +7,8 @@ import (
 
 	ethCrypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/prometheus/common/log"
-	"github.com/torusresearch/bijson"
 	"github.com/torusresearch/torus-common/secp256k1"
+	"github.com/torusresearch/torus-common/bijson"
 	"github.com/torusresearch/torus-public/common"
 )
 
