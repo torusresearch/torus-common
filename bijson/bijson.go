@@ -34,8 +34,7 @@ func (x BigIntExt) ReadExt(dest interface{}, v []byte) {
 
 // var h codec.CborHandle
 var h codec.MsgpackHandle
-
-// var h codec.JsonHandle
+var jsonHandle codec.JsonHandle
 
 func init() {
 	h.SetBytesExt(reflect.TypeOf(new(big.Int)), 1, BigIntExt{})
@@ -43,8 +42,8 @@ func init() {
 }
 
 func Marshal(v interface{}) ([]byte, error) {
-	var b []byte = make([]byte, 0, 64)
-	var enc *codec.Encoder = codec.NewEncoderBytes(&b, &h)
+	b := make([]byte, 0, 64)
+	enc := codec.NewEncoderBytes(&b, &h)
 	if err := enc.Encode(v); err != nil {
 		return nil, err
 	}
@@ -52,7 +51,7 @@ func Marshal(v interface{}) ([]byte, error) {
 }
 
 func Unmarshal(data []byte, v interface{}) error {
-	var dec *codec.Decoder = codec.NewDecoderBytes(data, &h)
+	dec := codec.NewDecoderBytes(data, &h)
 	return dec.Decode(v)
 }
 
@@ -62,4 +61,18 @@ func NewDecoder(r io.Reader) *codec.Decoder {
 
 func NewEncoder(w io.Writer) *codec.Encoder {
 	return codec.NewEncoder(w, &h)
+}
+
+func JsonMarshal(v interface{}) ([]byte, error) {
+	b := make([]byte, 0, 64)
+	enc := codec.NewEncoderBytes(&b, &jsonHandle)
+	if err := enc.Encode(v); err != nil {
+		return nil, err
+	}
+	return b, nil
+}
+
+func JsonUnmarshal(data []byte, v interface{}) error {
+	dec := codec.NewDecoderBytes(data, &jsonHandle)
+	return dec.Decode(v)
 }
