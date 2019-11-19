@@ -66,8 +66,9 @@ func Marshal(v interface{}) ([]byte, error) {
 	}
 
 	u := v
-	Unmarshal(b, &u)
+	err = Unmarshal(b, &u)
 	if !reflect.DeepEqual(u, v) {
+		fmt.Println(err)
 		fmt.Println(u)
 		fmt.Println(v)
 		panic(nil)
