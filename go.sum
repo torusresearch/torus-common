@@ -365,6 +365,7 @@ github.com/tidwall/gjson v1.3.2/go.mod h1:P256ACg0Mn+j1RXIDXoss50DeIABTYK1PULOJH
 github.com/tidwall/match v1.0.1/go.mod h1:LujAq0jyVjBy028G1WhWfIzbpQfMO8bBZ6Tyb0+pL9E=
 github.com/tidwall/pretty v1.0.0/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
 github.com/tjfoc/gmsm v1.0.1/go.mod h1:XxO4hdhhrzAd+G4CjDqaOkd0hUzmtPR/d3EiBBMn/wc=
+github.com/torusresearch/bijson v0.0.0-20190412111544-04b14d25087c h1:NgLgKes+jr2kcn3azQcsEOqOsj4dtom+faOCiumxEok=
 github.com/torusresearch/bijson v0.0.0-20190412111544-04b14d25087c/go.mod h1:V8+j1H2FVgbLA+pg1+AX4kXMusd9j6KjxmFFjAIR25A=
 github.com/torusresearch/jsonrpc v0.0.0-20190430032056-28092f3397fa/go.mod h1:3+FGqAmgtlTaDB9ERCXLlKfVYAwsiF2sBj9wH0hAMlw=
 github.com/torusresearch/tendermint v0.0.0-20190811160429-360785fa141a h1:NTe7pYMP7V5aFLdPLH14G0W0KzPRLBLGt0SOLNlf9Xg=

@@ -1,6 +1,7 @@
 package bijson
 
 import (
+	"fmt"
 	"io"
 	"math/big"
 	"reflect"
@@ -43,18 +44,36 @@ func init() {
 	h.SetInterfaceExt(reflect.TypeOf(new(big.Int)), 1, BigIntExt{})
 }
 
-func Marshal(v interface{}) ([]byte, error) {
+func marshal(v interface{}) ([]byte, error) {
 	b := make([]byte, 0, 64)
 	enc := codec.NewEncoderBytes(&b, &h)
 	if err := enc.Encode(v); err != nil {
 		return nil, err
 	}
+
 	return b, nil
 }
 
 func Unmarshal(data []byte, v interface{}) error {
 	dec := codec.NewDecoderBytes(data, &h)
 	return dec.Decode(v)
+}
+
+func Marshal(v interface{}) ([]byte, error) {
+	b, err := marshal(v)
+	if err != nil {
+		return nil, err
+	}
+
+	u := v
+	Unmarshal(b, &u)
+	if !reflect.DeepEqual(u, v) {
+		fmt.Println(u)
+		fmt.Println(v)
+		panic(nil)
+	}
+
+	return b, nil
 }
 
 func NewDecoder(r io.Reader) *codec.Decoder {
