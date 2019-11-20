@@ -32,9 +32,11 @@ func (x BigIntExt) ReadExt(dest interface{}, v []byte) {
 	tt.SetString(string(v), 16)
 }
 
-var h codec.CborHandle
+// var h codec.CborHandle
 
 // var h codec.MsgpackHandle
+
+var h codec.JsonHandle
 
 var jsonHandle codec.JsonHandle
 
