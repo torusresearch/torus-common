@@ -56,7 +56,22 @@ func marshal(v interface{}) ([]byte, error) {
 
 func Unmarshal(data []byte, v interface{}) error {
 	dec := codec.NewDecoderBytes(data, &h)
-	return dec.Decode(v)
+	switch v.(type) {
+	case *interface{}:
+		elem := reflect.ValueOf(v).Elem()
+		u := elem.Interface()
+		if err := dec.Decode(v); err != nil {
+			return err
+		}
+
+		if elem.IsNil() {
+			elem.Set(reflect.ValueOf(u))
+		}
+
+		return nil
+	default:
+		return dec.Decode(v)
+	}
 }
 
 func Marshal(v interface{}) ([]byte, error) {
@@ -65,13 +80,13 @@ func Marshal(v interface{}) ([]byte, error) {
 		return nil, err
 	}
 
-	u := v
-	err = Unmarshal(b, &u)
+	u := reflect.New(reflect.TypeOf(v)).Elem().Interface()
+	if err := Unmarshal(b, &u); err != nil {
+		return nil, err
+	}
+
 	if !reflect.DeepEqual(u, v) {
-		fmt.Println(err)
-		fmt.Println(u)
-		fmt.Println(v)
-		panic(nil)
+		return nil, fmt.Errorf("structs are not equal: %v %v", u, v)
 	}
 
 	return b, nil
