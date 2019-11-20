@@ -1,7 +1,6 @@
 package bijson
 
 import (
-	"fmt"
 	"io"
 	"math/big"
 	"reflect"
@@ -80,14 +79,14 @@ func Marshal(v interface{}) ([]byte, error) {
 		return nil, err
 	}
 
-	u := reflect.New(reflect.TypeOf(v)).Elem().Interface()
-	if err := Unmarshal(b, &u); err != nil {
-		return nil, err
-	}
+	// u := reflect.New(reflect.TypeOf(v)).Elem().Interface()
+	// if err := Unmarshal(b, &u); err != nil {
+	// 	return nil, err
+	// }
 
-	if !reflect.DeepEqual(u, v) {
-		return nil, fmt.Errorf("structs are not equal: %v %v", u, v)
-	}
+	// if !reflect.DeepEqual(u, v) {
+	// 	return nil, fmt.Errorf("structs are not equal: %v %v", u, v)
+	// }
 
 	return b, nil
 }
