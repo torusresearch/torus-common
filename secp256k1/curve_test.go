@@ -5,14 +5,14 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/torusresearch/torus-public/common"
+	"github.com/torusresearch/torus-common/crypto"
 )
 
 func TestEncryptDecrypt(test *testing.T) {
 	input := "hello"
 	privK := *big.NewInt(1234)
 	pubKx, pubKy := Curve.ScalarBaseMult(privK.Bytes())
-	pubK := common.Point{X: *pubKx, Y: *pubKy}
+	pubK := crypto.Point{X: *pubKx, Y: *pubKy}
 	encryptedOutput, err := Encrypt(pubK, []byte(input))
 	if err != nil {
 		test.Fail()

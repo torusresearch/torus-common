@@ -164,6 +164,10 @@ func VerifyPtFromRawWithPubKey(body []byte, pubKeyX string, pubKeyY string, pubK
 }
 
 
+type Point struct {
+	X big.Int
+	Y big.Int
+}
 
 func BigIntToECDSAPrivateKey(x big.Int) *ecdsa.PrivateKey {
 	return &ecdsa.PrivateKey{
