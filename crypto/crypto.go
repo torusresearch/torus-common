@@ -162,3 +162,36 @@ func VerifyPtFromRawWithPubKey(body []byte, pubKeyX string, pubKeyY string, pubK
 
 	return VerifyPtFromRaw(msg, pubKeyPt, signature)
 }
+
+
+
+func BigIntToECDSAPrivateKey(x big.Int) *ecdsa.PrivateKey {
+	return &ecdsa.PrivateKey{
+		PublicKey: ecdsa.PublicKey{
+			Curve: crypto.S256(),
+		},
+		D: &x,
+	}
+}
+
+
+func PointToECDSAPublicKey(point Point) *ecdsa.PublicKey {
+	return &ecdsa.PublicKey{
+		Curve: crypto.S256(),
+		X:     &point.X,
+		Y:     &point.Y,
+	}
+}
+
+
+
+// converts common point to ETH address format borrowint ethcrypto functions
+func PointToEthAddress(point Point) *common.Address {
+	addr := crypto.PubkeyToAddress(*PointToECDSAPublicKey(point))
+	return &addr
+}
+
+
+func BigIntToPoint(x, y *big.Int) Point {
+	return Point{X: *x, Y: *y}
+}
