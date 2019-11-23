@@ -1,6 +1,7 @@
 package secp256k1
 
 import (
+	"crypto/rand"
 	"fmt"
 	"math/big"
 
@@ -24,6 +25,11 @@ var (
 	G      = common.Point{X: *Curve.Gx, Y: *Curve.Gy}
 	H      = *HashToPoint(G.X.Bytes())
 )
+
+func RandomBigInt() *big.Int {
+	randomInt, _ := rand.Int(rand.Reader, GeneratorOrder)
+	return randomInt
+}
 
 func HashToPoint(data []byte) *common.Point {
 	keccakHash := Keccak256(data)
