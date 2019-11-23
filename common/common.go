@@ -30,6 +30,10 @@ func TimeTrack(start time.Time, name string) {
 	fmt.Printf("%s took %s\n", name, elapsed)
 }
 
+func BigIntToPoint(x, y *big.Int) Point {
+	return Point{X: *x, Y: *y}
+}
+
 func HexToBigInt(s string) *big.Int {
 	r, ok := new(big.Int).SetString(s, 16)
 	if !ok {
