@@ -5,7 +5,7 @@ import (
 	"math/big"
 
 	"github.com/btcsuite/btcd/btcec"
-	"github.com/torusresearch/torus-public/common"
+	"github.com/torusresearch/torus-common/common"
 	"golang.org/x/crypto/sha3"
 )
 

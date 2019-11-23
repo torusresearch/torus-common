@@ -37,3 +37,8 @@ func HexToBigInt(s string) *big.Int {
 	}
 	return r
 }
+
+type Point struct {
+	X big.Int
+	Y big.Int
+}

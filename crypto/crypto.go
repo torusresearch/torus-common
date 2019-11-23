@@ -5,11 +5,13 @@ import (
 	"encoding/hex"
 	"math/big"
 
+	ethCommon "github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
 	ethCrypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/prometheus/common/log"
 	"github.com/torusresearch/bijson"
+	"github.com/torusresearch/torus-common/common"
 	"github.com/torusresearch/torus-common/secp256k1"
-	"github.com/torusresearch/torus-public/common"
 )
 
 type signObject struct {
@@ -163,12 +165,6 @@ func VerifyPtFromRawWithPubKey(body []byte, pubKeyX string, pubKeyY string, pubK
 	return VerifyPtFromRaw(msg, pubKeyPt, signature)
 }
 
-
-type Point struct {
-	X big.Int
-	Y big.Int
-}
-
 func BigIntToECDSAPrivateKey(x big.Int) *ecdsa.PrivateKey {
 	return &ecdsa.PrivateKey{
 		PublicKey: ecdsa.PublicKey{
@@ -178,8 +174,7 @@ func BigIntToECDSAPrivateKey(x big.Int) *ecdsa.PrivateKey {
 	}
 }
 
-
-func PointToECDSAPublicKey(point Point) *ecdsa.PublicKey {
+func PointToECDSAPublicKey(point common.Point) *ecdsa.PublicKey {
 	return &ecdsa.PublicKey{
 		Curve: crypto.S256(),
 		X:     &point.X,
@@ -187,15 +182,8 @@ func PointToECDSAPublicKey(point Point) *ecdsa.PublicKey {
 	}
 }
 
-
-
 // converts common point to ETH address format borrowint ethcrypto functions
-func PointToEthAddress(point Point) *common.Address {
+func PointToEthAddress(point common.Point) *ethCommon.Address {
 	addr := crypto.PubkeyToAddress(*PointToECDSAPublicKey(point))
 	return &addr
-}
-
-
-func BigIntToPoint(x, y *big.Int) Point {
-	return Point{X: *x, Y: *y}
 }
