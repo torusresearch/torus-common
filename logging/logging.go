@@ -141,8 +141,13 @@ func (l *logger) With(keyvals ...interface{}) Logger {
 
 // NewDefault returns a default logger
 func NewDefault() Logger {
+	f, err := os.Create("/tmp/torus-tester.log")
+	if err != nil {
+		panic(err)
+	}
+
 	return (&logger{
-		Out: os.Stdout,
+		Out: f,
 	}).WithLevel(INFO)
 
 }
