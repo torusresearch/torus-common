@@ -6,6 +6,7 @@ import (
 	"os"
 	"sync"
 	"time"
+	"bytes"
 )
 
 // LevelMapping maps LogLevels into expected keys
@@ -139,15 +140,12 @@ func (l *logger) With(keyvals ...interface{}) Logger {
 	return l
 }
 
+var Logs bytes.Buffer
+
 // NewDefault returns a default logger
 func NewDefault() Logger {
-	f, err := os.Create("/tmp/torus.log")
-	if err != nil {
-		panic(err)
-	}
-
 	return (&logger{
-		Out: io.MultiWriter(os.Stdout, f),
+		Out: io.MultiWriter(os.Stdout, &Logs),
 	}).WithLevel(INFO)
 
 }
