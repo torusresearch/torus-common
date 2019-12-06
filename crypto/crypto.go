@@ -150,6 +150,7 @@ func VerifyPtFromRaw(msg []byte, pubKeyPt common.Point, signature []byte) bool {
 	return VerifyFromRaw(msg, ecdsaPubKey, signature)
 }
 
+// VerifyPtFromRawWithPubKey is used for validating signObjects
 func VerifyPtFromRawWithPubKey(body []byte, pubKeyX string, pubKeyY string, pubKeyPt common.Point, signature []byte) bool {
 	objectToVerify := signObject{
 		body,
