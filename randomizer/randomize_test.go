@@ -47,7 +47,14 @@ func TestRandomize(t *testing.T) {
 
 	originalStructure = copyTestStruct(testStructure)
 
-	Randomize(&testStructure)
+	err := Randomize(&testStructure)
+
+	if err != nil {
+		t.Log("shouldn't throw any errors")
+		t.Error("expected nil, got " + err.Error())
+		t.Fail()
+		return
+	}
 
 	// Tests for Complex.Boolean
 	if originalStructure.Boolean != testStructure.Boolean {

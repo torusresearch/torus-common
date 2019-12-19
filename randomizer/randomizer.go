@@ -1,6 +1,7 @@
 package randomizer
 
 import (
+	"errors"
 	"math/rand"
 	"reflect"
 )
@@ -23,7 +24,11 @@ import (
 // Map Support Definition
 // 		1. The key should be string
 // 		2. Supported value types are: int64, float64, string, scalar struct
-func Randomize(value interface{}) {
+func Randomize(value interface{}) error {
+
+	if reflect.TypeOf(value).Kind() != reflect.Ptr {
+		return errors.New("not a pointer")
+	}
 
 	// Get the mutable reflect reference to the interface{}
 	mutable := reflect.ValueOf(value)
@@ -64,6 +69,8 @@ func Randomize(value interface{}) {
 		// run it through randomValueGenerator
 		randomValueGenerator(mutable.Elem())
 	}
+
+	return nil
 }
 
 func randomValueGenerator(mutable reflect.Value) {
