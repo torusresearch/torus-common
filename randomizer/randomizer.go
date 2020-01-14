@@ -1,10 +1,14 @@
 package randomizer
 
 import (
+	cryptoRand "crypto/rand"
 	"errors"
+	"math/big"
 	"math/rand"
 	"reflect"
 	"time"
+
+	"github.com/torusresearch/torus-common/secp256k1"
 )
 
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -13,14 +17,9 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-// randInt returns a random int64
-func randInt() int64 {
-	return int64(rand.Int())
-}
-
-// randFloat returns a random float64
-func randFloat() float64 {
-	return rand.Float64()
+func RandomBigInt() *big.Int {
+	randomInt, _ := cryptoRand.Int(cryptoRand.Reader, secp256k1.GeneratorOrder)
+	return randomInt
 }
 
 // randLetterString Generates a random string of the given length
@@ -55,16 +54,13 @@ func Randomize(value interface{}) error {
 		return errors.New("not a pointer")
 	}
 
-	// Get the mutable reflect reference to the interface{}
 	mutable := reflect.ValueOf(value)
-	// Check the Kind()
 	switch mutable.Elem().Kind() {
 	case reflect.Array, reflect.Slice:
-
-		// Iterate through the Array/Slice and randomize each of the element
 		for i := 0; i < mutable.Elem().Len(); i++ {
 			randomValueGenerator(mutable.Field(i))
 		}
+
 	case reflect.Map:
 		// For each value in the map
 		// Check the Kind() of the Value
@@ -74,21 +70,17 @@ func Randomize(value interface{}) error {
 			v := mutable.Elem().MapIndex(e)
 			switch v.Kind() {
 			case reflect.Int:
-				v.SetMapIndex(e, reflect.ValueOf(randInt()))
-
+				v.SetMapIndex(e, reflect.ValueOf(rand.Int()))
+			case reflect.Float64:
+				v.SetMapIndex(e, reflect.ValueOf(rand.Float64()))
 			case reflect.String:
 				v.SetMapIndex(e, reflect.ValueOf(randLetterString(len(v.String()))))
-
 			case reflect.Struct:
 				randomValueGenerator(v)
-
-			case reflect.Float64:
-				v.SetMapIndex(e, reflect.ValueOf(randFloat()))
 			}
 		}
 
 	case reflect.Struct:
-		// run it through randomValueGenerator
 		randomValueGenerator(mutable.Elem())
 	}
 
@@ -107,41 +99,43 @@ func randomValueGenerator(mutable reflect.Value) {
 	// 		Check the Kind() of the Value
 	// 		and set the random value
 	// 		for Kind() = Struct run it through randomValueGenerator
+	reflectBigInt := reflect.ValueOf(*new(big.Int)).Type()
 	for i := 0; i < mutable.NumField(); i++ {
-		switch mutable.Field(i).Kind() {
-		case reflect.Struct:
-			randomValueGenerator(mutable.Field(i))
+		if mutable.Field(i).Type() == reflectBigInt {
+			mutable.Field(i).Set(reflect.ValueOf(*RandomBigInt()))
+		} else {
+			switch mutable.Field(i).Kind() {
+			case reflect.Int:
+				mutable.Field(i).SetInt(int64(rand.Int()))
 
-		case reflect.Int:
-			mutable.Field(i).SetInt(randInt())
+			case reflect.Float64:
+				mutable.Field(i).SetFloat(rand.Float64())
 
-		case reflect.Float64:
-			mutable.Field(i).SetFloat(randFloat())
+			case reflect.String:
+				mutable.Field(i).SetString(randLetterString(len(mutable.Field(i).String())))
 
-		case reflect.String:
-			mutable.Field(i).SetString(randLetterString(len(mutable.Field(i).String())))
-
-		case reflect.Map:
-			for _, e := range mutable.Field(i).MapKeys() {
-				v := mutable.Field(i).MapIndex(e)
-				switch v.Elem().Kind() {
-				case reflect.Int:
-					mutable.Field(i).SetMapIndex(e, reflect.ValueOf(randInt()))
-
-				case reflect.String:
-					mutable.Field(i).SetMapIndex(e, reflect.ValueOf(randLetterString(len(v.String()))))
-
-				case reflect.Struct:
-					randomValueGenerator(v)
-
-				case reflect.Float64:
-					mutable.Field(i).SetMapIndex(e, reflect.ValueOf(randFloat()))
+			case reflect.Array, reflect.Slice:
+				for j := 0; j < mutable.Field(i).Len(); j++ {
+					randomValueGenerator(mutable.Field(i).Index(j))
 				}
-			}
 
-		case reflect.Array, reflect.Slice:
-			for j := 0; j < mutable.Field(i).Len(); j++ {
-				randomValueGenerator(mutable.Field(i).Index(j))
+			case reflect.Map:
+				for _, e := range mutable.Field(i).MapKeys() {
+					v := mutable.Field(i).MapIndex(e)
+					switch v.Elem().Kind() {
+					case reflect.Int:
+						mutable.Field(i).SetMapIndex(e, reflect.ValueOf(rand.Int()))
+					case reflect.String:
+						mutable.Field(i).SetMapIndex(e, reflect.ValueOf(randLetterString(len(v.String()))))
+					case reflect.Struct:
+						randomValueGenerator(v)
+					case reflect.Float64:
+						mutable.Field(i).SetMapIndex(e, reflect.ValueOf(rand.Float64()))
+					}
+				}
+
+			case reflect.Struct:
+				randomValueGenerator(mutable.Field(i))
 			}
 		}
 	}

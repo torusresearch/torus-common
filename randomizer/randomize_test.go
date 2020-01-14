@@ -1,6 +1,7 @@
 package randomizer
 
 import (
+	"math/big"
 	"reflect"
 	"strconv"
 	"testing"
@@ -17,6 +18,7 @@ type Complex struct {
 	Map     map[string]interface{}
 	Boolean bool
 	Array   []Simple
+	BigInt  big.Int
 }
 
 func TestRandomize(t *testing.T) {
@@ -43,6 +45,7 @@ func TestRandomize(t *testing.T) {
 			{Integer: 253, String: "another random string", Float: 63.33},
 			{Integer: 243, String: "another another random string", Float: 993.33},
 		},
+		BigInt: *big.NewInt(5),
 	}
 
 	originalStructure = copyTestStruct(testStructure)
