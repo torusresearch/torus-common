@@ -127,7 +127,9 @@ type (
 		hash common.Hash
 	}
 	touchChange struct {
-		account *common.Address
+		account   *common.Address
+		prev      bool
+		prevDirty bool
 	}
 )
 
