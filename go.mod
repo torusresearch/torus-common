@@ -29,6 +29,7 @@ require (
 	github.com/huin/goupnp v0.0.0-20161224104101-679507af18f3 // indirect
 	github.com/influxdata/influxdb v1.2.3-0.20180221223340-01288bdb0883 // indirect
 	github.com/jackpal/go-nat-pmp v1.0.2-0.20160603034137-1fa385a6f458 // indirect
+	github.com/karalabe/hid v1.0.0 // indirect
 	github.com/karalabe/usb v0.0.0-20190919080040-51dc0efba356 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/kylelemons/godebug v1.1.0 // indirect
