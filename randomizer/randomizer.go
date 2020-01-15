@@ -22,7 +22,7 @@ func RandomBigInt() *big.Int {
 	return randomInt
 }
 
-// randLetterString Generates a random string of the given length
+// RandLetterString Generates a random string of the given length
 func RandLetterString(n int) string {
 	b := make([]rune, n)
 	for i := range b {
@@ -74,7 +74,7 @@ func Randomize(value interface{}) error {
 			case reflect.Float64:
 				v.SetMapIndex(e, reflect.ValueOf(rand.Float64()))
 			case reflect.String:
-				v.SetMapIndex(e, reflect.ValueOf(randLetterString(len(v.String()))))
+				v.SetMapIndex(e, reflect.ValueOf(RandLetterString(len(v.String()))))
 			case reflect.Struct:
 				randomValueGenerator(v)
 			}
@@ -112,7 +112,7 @@ func randomValueGenerator(mutable reflect.Value) {
 				mutable.Field(i).SetFloat(rand.Float64())
 
 			case reflect.String:
-				mutable.Field(i).SetString(randLetterString(len(mutable.Field(i).String())))
+				mutable.Field(i).SetString(RandLetterString(len(mutable.Field(i).String())))
 
 			case reflect.Array, reflect.Slice:
 				for j := 0; j < mutable.Field(i).Len(); j++ {
@@ -126,7 +126,7 @@ func randomValueGenerator(mutable reflect.Value) {
 					case reflect.Int:
 						mutable.Field(i).SetMapIndex(e, reflect.ValueOf(rand.Int()))
 					case reflect.String:
-						mutable.Field(i).SetMapIndex(e, reflect.ValueOf(randLetterString(len(v.String()))))
+						mutable.Field(i).SetMapIndex(e, reflect.ValueOf(RandLetterString(len(v.String()))))
 					case reflect.Struct:
 						randomValueGenerator(v)
 					case reflect.Float64:
