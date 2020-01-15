@@ -23,7 +23,7 @@ func RandomBigInt() *big.Int {
 }
 
 // randLetterString Generates a random string of the given length
-func randLetterString(n int) string {
+func RandLetterString(n int) string {
 	b := make([]rune, n)
 	for i := range b {
 		b[i] = letterRunes[rand.Intn(len(letterRunes))]
