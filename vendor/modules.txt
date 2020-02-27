@@ -1,26 +1,50 @@
+# github.com/Azure/azure-pipeline-go v0.2.2
+## explicit
+# github.com/Azure/azure-storage-blob-go v0.7.0
+## explicit
+# github.com/Azure/go-autorest/autorest/adal v0.8.0
+## explicit
+# github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6
+## explicit
+# github.com/VictoriaMetrics/fastcache v1.5.2
+## explicit
 # github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 github.com/alecthomas/template
 github.com/alecthomas/template/parse
 # github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4
 github.com/alecthomas/units
 # github.com/allegro/bigcache v1.2.1
+## explicit
 github.com/allegro/bigcache
 github.com/allegro/bigcache/queue
 # github.com/aristanetworks/goarista v0.0.0-20170210015632-ea17b1a17847
+## explicit
 github.com/aristanetworks/goarista/monotime
 # github.com/beorn7/perks v1.0.1
 github.com/beorn7/perks/quantile
 # github.com/btcsuite/btcd v0.20.1-beta
+## explicit
 github.com/btcsuite/btcd/btcec
+# github.com/cespare/cp v0.1.0
+## explicit
 # github.com/cespare/xxhash/v2 v2.1.0
 github.com/cespare/xxhash/v2
+# github.com/cloudflare/cloudflare-go v0.10.2-0.20190916151808-a80f83b9add9
+## explicit
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
 # github.com/deckarep/golang-set v0.0.0-20180603214616-504e848d77ea
+## explicit
 github.com/deckarep/golang-set
+# github.com/docker/docker v1.4.2-0.20180625184442-8e610b2b55bf
+## explicit
 # github.com/edsrzf/mmap-go v0.0.0-20160512033002-935e0e8a636c
+## explicit
 github.com/edsrzf/mmap-go
+# github.com/elastic/gosigar v0.8.1-0.20180330100440-37f05ff46ffa
+## explicit
 # github.com/ethereum/go-ethereum v1.8.20
+## explicit
 github.com/ethereum/go-ethereum
 github.com/ethereum/go-ethereum/accounts
 github.com/ethereum/go-ethereum/accounts/abi
@@ -59,30 +83,74 @@ github.com/ethereum/go-ethereum/params
 github.com/ethereum/go-ethereum/rlp
 github.com/ethereum/go-ethereum/rpc
 github.com/ethereum/go-ethereum/trie
+# github.com/fatih/color v1.3.0
+## explicit
+# github.com/fjl/memsize v0.0.0-20180418122429-ca190fb6ffbc
+## explicit
+# github.com/gballet/go-libpcsclite v0.0.0-20190607065134-2772fd86a8ff
+## explicit
+# github.com/go-ole/go-ole v1.2.1
+## explicit
 # github.com/go-stack/stack v1.8.0
 github.com/go-stack/stack
 # github.com/golang/protobuf v1.3.2
 github.com/golang/protobuf/proto
 # github.com/golang/snappy v0.0.1
 github.com/golang/snappy
+# github.com/google/go-cmp v0.3.1
+## explicit
+# github.com/gorilla/websocket v1.4.1-0.20190629185528-ae1634f6a989
+## explicit
+# github.com/graph-gophers/graphql-go v0.0.0-20191115155744-f33e81362277
+## explicit
 # github.com/hashicorp/golang-lru v0.0.0-20160813221303-0a025b7e63ad
+## explicit
 github.com/hashicorp/golang-lru
 github.com/hashicorp/golang-lru/simplelru
+# github.com/huin/goupnp v0.0.0-20161224104101-679507af18f3
+## explicit
+# github.com/influxdata/influxdb v1.2.3-0.20180221223340-01288bdb0883
+## explicit
+# github.com/jackpal/go-nat-pmp v1.0.2-0.20160603034137-1fa385a6f458
+## explicit
+# github.com/karalabe/hid v1.0.0
+## explicit
+# github.com/karalabe/usb v0.0.0-20190919080040-51dc0efba356
+## explicit
 # github.com/konsorten/go-windows-terminal-sequences v1.0.1
 github.com/konsorten/go-windows-terminal-sequences
+# github.com/kr/pretty v0.1.0
+## explicit
+# github.com/kylelemons/godebug v1.1.0
+## explicit
+# github.com/mattn/go-colorable v0.1.0
+## explicit
+# github.com/mattn/go-isatty v0.0.5-0.20180830101745-3fb116b82035
+## explicit
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
 github.com/matttproud/golang_protobuf_extensions/pbutil
+# github.com/naoina/go-stringutil v0.1.0
+## explicit
+# github.com/naoina/toml v0.1.2-0.20170918210437-9fafd6967416
+## explicit
+# github.com/olekukonko/tablewriter v0.0.2-0.20190409134802-7e037d187b0c
+## explicit
 # github.com/pborman/uuid v0.0.0-20170112150404-1b00554d8222
+## explicit
 github.com/pborman/uuid
+# github.com/peterh/liner v1.1.1-0.20190123174540-a2c9a5303de7
+## explicit
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
 # github.com/prometheus/client_golang v1.2.1
+## explicit
 github.com/prometheus/client_golang/prometheus
 github.com/prometheus/client_golang/prometheus/internal
 github.com/prometheus/client_golang/prometheus/promhttp
 # github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4
 github.com/prometheus/client_model/go
 # github.com/prometheus/common v0.7.0
+## explicit
 github.com/prometheus/common/expfmt
 github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
 github.com/prometheus/common/log
@@ -91,17 +159,33 @@ github.com/prometheus/common/model
 github.com/prometheus/procfs
 github.com/prometheus/procfs/internal/fs
 github.com/prometheus/procfs/internal/util
+# github.com/prometheus/tsdb v0.6.2-0.20190402121629-4f204dcbc150
+## explicit
 # github.com/rjeczalik/notify v0.9.1
+## explicit
 github.com/rjeczalik/notify
+# github.com/robertkrimen/otto v0.0.0-20170205013659-6a77b7cbc37d
+## explicit
 # github.com/rs/cors v0.0.0-20160617231935-a62a804a8a00
+## explicit
 github.com/rs/cors
 # github.com/rs/xhandler v0.0.0-20160618193221-ed27b6fd6521
+## explicit
 github.com/rs/xhandler
 # github.com/sirupsen/logrus v1.4.2
+## explicit
 github.com/sirupsen/logrus
-# github.com/stretchr/testify v1.4.0
+# github.com/status-im/keycard-go v0.0.0-20190316090335-8537d3370df4
+## explicit
+# github.com/steakknife/bloomfilter v0.0.0-20180922174646-6819c0d2a570
+## explicit
+# github.com/steakknife/hamming v0.0.0-20180906055917-c99c65617cd3
+## explicit
+# github.com/stretchr/testify v1.5.1
+## explicit
 github.com/stretchr/testify/assert
 # github.com/syndtr/goleveldb v1.0.1-0.20190923125748-758128399b1d
+## explicit
 github.com/syndtr/goleveldb/leveldb
 github.com/syndtr/goleveldb/leveldb/cache
 github.com/syndtr/goleveldb/leveldb/comparer
@@ -114,14 +198,21 @@ github.com/syndtr/goleveldb/leveldb/opt
 github.com/syndtr/goleveldb/leveldb/storage
 github.com/syndtr/goleveldb/leveldb/table
 github.com/syndtr/goleveldb/leveldb/util
-# github.com/torusresearch/bijson v0.0.0-20191129030154-a278a4bd260c
+# github.com/torusresearch/bijson v0.0.0-20200227031930-e015daa0fdef
+## explicit
 github.com/torusresearch/bijson
+# github.com/tyler-smith/go-bip39 v1.0.1-0.20181017060643-dbb3b84ba2ef
+## explicit
+# github.com/wsddn/go-ecdh v0.0.0-20161211032359-48726bab9208
+## explicit
 # golang.org/x/crypto v0.0.0-20191202143827-86a70503ff7e
+## explicit
 golang.org/x/crypto/pbkdf2
 golang.org/x/crypto/ripemd160
 golang.org/x/crypto/scrypt
 golang.org/x/crypto/sha3
 # golang.org/x/net v0.0.0-20190628185345-da137c7871d7
+## explicit
 golang.org/x/net/context
 golang.org/x/net/websocket
 # golang.org/x/sys v0.0.0-20191010194322-b09406accb47
@@ -130,9 +221,20 @@ golang.org/x/sys/unix
 golang.org/x/sys/windows
 golang.org/x/sys/windows/registry
 golang.org/x/sys/windows/svc/eventlog
+# golang.org/x/text v0.3.2
+## explicit
 # gopkg.in/alecthomas/kingpin.v2 v2.2.6
 gopkg.in/alecthomas/kingpin.v2
 # gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce
+## explicit
 gopkg.in/natefinch/npipe.v2
+# gopkg.in/olebedev/go-duktape.v3 v3.0.0-20190213234257-ec84240a7772
+## explicit
+# gopkg.in/sourcemap.v1 v1.0.5
+## explicit
+# gopkg.in/urfave/cli.v1 v1.20.0
+## explicit
 # gopkg.in/yaml.v2 v2.2.2
 gopkg.in/yaml.v2
+# gotest.tools v2.2.0+incompatible
+## explicit
