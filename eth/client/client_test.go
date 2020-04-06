@@ -20,13 +20,13 @@ func TestGanacheDeploy(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	address, tx, nodelist, err := c.DeployContract(key)
+	nodeListAddress, nodelist, verifierListAddress, verifierlist, err := c.DeployContract(key)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	fmt.Printf("The address of deployed contract is: %s \n", address.Hex())
-	fmt.Println(tx.Hash().Hex())
+	fmt.Printf("The address of the nodelist is: %s \n", nodeListAddress.Hex())
+	fmt.Printf("The address of the verifierlist is: %s \n", verifierListAddress.Hex())
 
 	auth := bind.NewKeyedTransactor(key)
 
@@ -56,6 +56,12 @@ func TestGanacheDeploy(t *testing.T) {
 		if !isWhitelisted {
 			t.Fatal("account", acc, "expected to be whitelisted, but it is not!")
 		}
+	}
+
+	// verifier to add
+	_, err = verifierlist.AddVerifier(auth, "test", "test-verifier", "{clientId:'vjknqu32'}", common.HexToAddress("0x52c476751142ce2fb4db4f19b500e78feee10b06"))
+	if err != nil {
+		t.Fatal("failed to add verifier: ", err)
 	}
 
 }
