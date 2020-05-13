@@ -22,9 +22,26 @@ var (
 	GeneratorOrder = common.HexToBigInt("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141")
 	// scalar to the power of this is like square root, eg. y^sqRoot = y^0.5 (if it exists)
 	SqRoot = common.HexToBigInt("3fffffffffffffffffffffffffffffffffffffffffffffffffffffffbfffff0c")
-	G      = common.Point{X: *Curve.Gx, Y: *Curve.Gy}
-	H      = *HashToPoint(G.X.Bytes())
+	G      common.Point
+	H      common.Point
 )
+
+func init() {
+	x := new(big.Int)
+	x, ok := x.SetString("15112221349535400772501151409588531511454012693041857206046113283949847762202", 10)
+	if !ok {
+		panic("")
+	}
+
+	y := new(big.Int)
+	y, ok = y.SetString("46316835694926478169428394003475163141307993866256225615783033603165251855960", 10)
+	if !ok {
+		panic("")
+	}
+
+	G = common.Point{X: *x, Y: *y}
+	H = *HashToPoint(G.X.Bytes())
+}
 
 func RandomBigInt() *big.Int {
 	randomInt, _ := rand.Int(rand.Reader, GeneratorOrder)
