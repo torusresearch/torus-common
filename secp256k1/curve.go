@@ -1,6 +1,7 @@
 package secp256k1
 
 import (
+	"crypto/elliptic"
 	"crypto/rand"
 	"fmt"
 	"math/big"
@@ -15,7 +16,7 @@ type KoblitzCurve struct {
 }
 
 var (
-	Curve = &KoblitzCurve{btcec.S256()}
+	Curve *KoblitzCurve
 	// field order, also known as p, usually used for scalars
 	FieldOrder = common.HexToBigInt("fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f")
 	// group order, also known as q, it is the number of points in the curve, and is usually used in exponents
@@ -27,19 +28,27 @@ var (
 )
 
 func init() {
-	x := new(big.Int)
-	x, ok := x.SetString("15112221349535400772501151409588531511454012693041857206046113283949847762202", 10)
-	if !ok {
-		panic("")
+	P, _ := new(big.Int).SetString("1000000000000000000000000000000014def9dea2f79cd65812631a5cf5d3ed", 16)
+	N, _ := new(big.Int).SetString("254", 10)
+	B, _ := new(big.Int).SetString("14def9dea2f79cd65812631a5cf5d3ed", 16)
+	Gx, _ := new(big.Int).SetString("216936D3CD6E53FEC0A4E231FDD6DC5C692CC7609525A7B2C9562D608F25D51A", 16)
+	Gy, _ := new(big.Int).SetString("6666666666666666666666666666666666666666666666666666666666666658", 16)
+
+	Curve = &KoblitzCurve{
+		KoblitzCurve: &btcec.KoblitzCurve{
+			CurveParams: &elliptic.CurveParams{
+				P:       P,
+				N:       N,
+				B:       B,
+				Gx:      Gx,
+				Gy:      Gy,
+				BitSize: 256,
+				Name:    "ed25519",
+			},
+		},
 	}
 
-	y := new(big.Int)
-	y, ok = y.SetString("46316835694926478169428394003475163141307993866256225615783033603165251855960", 10)
-	if !ok {
-		panic("")
-	}
-
-	G = common.Point{X: *x, Y: *y}
+	G = common.Point{X: *Gx, Y: *Gy}
 	H = *HashToPoint(G.X.Bytes())
 }
 
