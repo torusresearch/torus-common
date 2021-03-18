@@ -78,7 +78,7 @@ func (e *EthClient) DeployAdditionalContracts(key *ecdsa.PrivateKey, verifierLis
 		return
 	}
 
-	verifierListAggregatorAddress, _, verifierListAggregatorContract, err = verifierListAggregator.DeployVerifierListAggregator(auth, blockchain, verifierListAddress)
+	verifierListAggregatorAddress, _, verifierListAggregatorContract, err = verifierListAggregator.DeployVerifierListAggregator(auth, blockchain, verifierListAddress, verifierOwnerManagerAddress)
 	if err != nil {
 		return
 	}
