@@ -1397,7 +1397,7 @@ func (_VerifierList *VerifierListFilterer) ParseVerifierUpdated(log types.Log) (
 }
 
 // VerifierListAggregatorABI is the input ABI used to generate the binding from.
-const VerifierListAggregatorABI = "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_verifierListContract\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllVerifiers\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"},{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"setVerifier\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
+const VerifierListAggregatorABI = "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_verifierListContract\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_verifierOwnerManagerContract\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAllVerifiers\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"},{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"setVerifier\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"setVerifierOwner\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // VerifierListAggregatorFuncSigs maps the 4-byte function signature to its string representation.
 var VerifierListAggregatorFuncSigs = map[string]string{
@@ -1406,20 +1406,21 @@ var VerifierListAggregatorFuncSigs = map[string]string{
 	"8da5cb5b": "owner()",
 	"715018a6": "renounceOwnership()",
 	"5437988d": "setVerifier(address)",
+	"2c713f9f": "setVerifierOwner(address)",
 	"f2fde38b": "transferOwnership(address)",
 }
 
 // VerifierListAggregatorBin is the compiled bytecode used for deploying new contracts.
-var VerifierListAggregatorBin = "0x608060405234801561001057600080fd5b50604051610bf2380380610bf283398101604081905261002f916100c6565b60006100426001600160e01b036100b116565b600080546001600160a01b0319166001600160a01b0383169081178255604051929350917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a350600180546001600160a01b0319166001600160a01b0392909216919091179055610114565b3390565b80516100c0816100fd565b92915050565b6000602082840312156100d857600080fd5b60006100e484846100b5565b949350505050565b60006001600160a01b0382166100c0565b610106816100ec565b811461011157600080fd5b50565b610acf806101236000396000f3fe608060405234801561001057600080fd5b50600436106100625760003560e01c80635437988d14610067578063715018a61461007c5780638da5cb5b146100845780638f32d59b146100a2578063af8d1555146100b7578063f2fde38b146100cf575b600080fd5b61007a61007536600461063d565b6100e2565b005b61007a610131565b61008c61019f565b60405161009991906108f9565b60405180910390f35b6100aa6101ae565b604051610099919061095e565b6100bf6101d2565b6040516100999493929190610907565b61007a6100dd36600461063d565b610502565b6100ea6101ae565b61010f5760405162461bcd60e51b81526004016101069061097d565b60405180910390fd5b600180546001600160a01b0319166001600160a01b0392909216919091179055565b6101396101ae565b6101555760405162461bcd60e51b81526004016101069061097d565b600080546040516001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546001600160a01b0319169055565b6000546001600160a01b031690565b600080546001600160a01b03166101c3610532565b6001600160a01b031614905090565b6060806060806000600160009054906101000a90046001600160a01b03166001600160a01b03166316feefe86040518163ffffffff1660e01b815260040160206040518083038186803b15801561022857600080fd5b505afa15801561023c573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052506102609190810190610729565b905060608160405190808252806020026020018201604052801561029857816020015b60608152602001906001900390816102835790505b5090506060826040519080825280602002602001820160405280156102d157816020015b60608152602001906001900390816102bc5790505b50905060608360405190808252806020026020018201604052801561030a57816020015b60608152602001906001900390816102f55790505b509050606084604051908082528060200260200182016040528015610339578160200160208202803883390190505b50905060005b858110156103ef576001546040516357762ddd60e01b81526060916001600160a01b0316906357762ddd9061037890859060040161099d565b60006040518083038186803b15801561039057600080fd5b505afa1580156103a4573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526103cc91908101906106f4565b9050808683815181106103db57fe5b60209081029190910101525060010161033f565b5060005b858110156104f25760015485516000916001600160a01b03169063ac205deb9088908590811061041f57fe5b60200260200101516040518263ffffffff1660e01b8152600401610443919061096c565b60006040518083038186803b15801561045b57600080fd5b505afa15801561046f573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526104979190810190610663565b8686815181106104a357fe5b602002602001018987815181106104b657fe5b602002602001018988815181106104c957fe5b602090810291909101019390935292909152506001600160a01b039091169052506001016103f3565b5092989197509550909350915050565b61050a6101ae565b6105265760405162461bcd60e51b81526004016101069061097d565b61052f81610536565b50565b3390565b6001600160a01b03811661055c5760405162461bcd60e51b81526004016101069061098d565b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b80356105c281610a66565b92915050565b80516105c281610a66565b80516105c281610a7a565b600082601f8301126105ef57600080fd5b81516106026105fd826109d2565b6109ab565b9150808252602083016020830185838301111561061e57600080fd5b610629838284610a2c565b50505092915050565b80516105c281610a83565b60006020828403121561064f57600080fd5b600061065b84846105b7565b949350505050565b6000806000806080858703121561067957600080fd5b600061068587876105c8565b945050602085015167ffffffffffffffff8111156106a257600080fd5b6106ae878288016105de565b935050604085015167ffffffffffffffff8111156106cb57600080fd5b6106d7878288016105de565b92505060606106e8878288016105d3565b91505092959194509250565b60006020828403121561070657600080fd5b815167ffffffffffffffff81111561071d57600080fd5b61065b848285016105de565b60006020828403121561073b57600080fd5b600061065b8484610632565b6000610753838361076e565b505060200190565b6000610767838361084d565b9392505050565b61077781610a0d565b82525050565b600061078882610a00565b6107928185610a04565b935061079d836109fa565b8060005b838110156107cb5781516107b58882610747565b97506107c0836109fa565b9250506001016107a1565b509495945050505050565b60006107e182610a00565b6107eb8185610a04565b9350836020820285016107fd856109fa565b8060005b85811015610837578484038952815161081a858261075b565b9450610825836109fa565b60209a909a0199925050600101610801565b5091979650505050505050565b61077781610a18565b600061085882610a00565b6108628185610a04565b9350610872818560208601610a2c565b61087b81610a5c565b9093019392505050565b6000610892601683610a04565b7527bbb730b136329d103737ba103a34329037bbb732b960511b815260200192915050565b60006108c4601883610a04565b7f4f776e61626c653a206e6f207a65726f20616464726573730000000000000000815260200192915050565b61077781610a29565b602081016105c2828461076e565b6080808252810161091881876107d6565b9050818103602083015261092c81866107d6565b9050818103604083015261094081856107d6565b90508181036060830152610954818461077d565b9695505050505050565b602081016105c28284610844565b60208082528101610767818461084d565b602080825281016105c281610885565b602080825281016105c2816108b7565b602081016105c282846108f0565b60405181810167ffffffffffffffff811182821017156109ca57600080fd5b604052919050565b600067ffffffffffffffff8211156109e957600080fd5b506020601f91909101601f19160190565b60200190565b5190565b90815260200190565b60006105c282610a1d565b151590565b6001600160a01b031690565b90565b60005b83811015610a47578181015183820152602001610a2f565b83811115610a56576000848401525b50505050565b601f01601f191690565b610a6f81610a0d565b811461052f57600080fd5b610a6f81610a18565b610a6f81610a2956fea365627a7a7231582072efeef34b520e115cebe3a5d7da30f3d9f445739e7a2a265b287be2ff3e0a5a6c6578706572696d656e74616cf564736f6c63430005110040"
+var VerifierListAggregatorBin = "0x608060405234801561001057600080fd5b50604051610d99380380610d9983398101604081905261002f916100d2565b60006100426001600160e01b036100bd16565b600080546001600160a01b0319166001600160a01b0383169081178255604051929350917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a350600180546001600160a01b039384166001600160a01b03199182161790915560028054929093169116179055610134565b3390565b80516100cc8161011d565b92915050565b600080604083850312156100e557600080fd5b60006100f185856100c1565b9250506020610102858286016100c1565b9150509250929050565b60006001600160a01b0382166100cc565b6101268161010c565b811461013157600080fd5b50565b610c56806101436000396000f3fe608060405234801561001057600080fd5b506004361061007d5760003560e01c80638da5cb5b1161005b5780638da5cb5b146100b25780638f32d59b146100d0578063af8d1555146100e5578063f2fde38b146100fd5761007d565b80632c713f9f146100825780635437988d14610097578063715018a6146100aa575b600080fd5b6100956100903660046107a6565b610110565b005b6100956100a53660046107a6565b61015f565b6100956101a5565b6100ba610213565b6040516100c79190610a80565b60405180910390f35b6100d8610222565b6040516100c79190610ae5565b6100ed610246565b6040516100c79493929190610a8e565b61009561010b3660046107a6565b61066b565b610118610222565b61013d5760405162461bcd60e51b815260040161013490610b04565b60405180910390fd5b600280546001600160a01b0319166001600160a01b0392909216919091179055565b610167610222565b6101835760405162461bcd60e51b815260040161013490610b04565b600180546001600160a01b0319166001600160a01b0392909216919091179055565b6101ad610222565b6101c95760405162461bcd60e51b815260040161013490610b04565b600080546040516001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546001600160a01b0319169055565b6000546001600160a01b031690565b600080546001600160a01b031661023761069b565b6001600160a01b031614905090565b6060806060806000600160009054906101000a90046001600160a01b03166001600160a01b03166316feefe86040518163ffffffff1660e01b815260040160206040518083038186803b15801561029c57600080fd5b505afa1580156102b0573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052506102d491908101906108b0565b905060608160405190808252806020026020018201604052801561030c57816020015b60608152602001906001900390816102f75790505b50905060608260405190808252806020026020018201604052801561034557816020015b60608152602001906001900390816103305790505b50905060608360405190808252806020026020018201604052801561037e57816020015b60608152602001906001900390816103695790505b5090506060846040519080825280602002602001820160405280156103ad578160200160208202803883390190505b50905060005b85811015610463576001546040516357762ddd60e01b81526060916001600160a01b0316906357762ddd906103ec908590600401610b24565b60006040518083038186803b15801561040457600080fd5b505afa158015610418573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f19168201604052610440919081019061087b565b90508086838151811061044f57fe5b6020908102919091010152506001016103b3565b5060005b8581101561065b57600154855160009182916001600160a01b039091169063ac205deb9089908690811061049757fe5b60200260200101516040518263ffffffff1660e01b81526004016104bb9190610af3565b60006040518083038186803b1580156104d357600080fd5b505afa1580156104e7573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405261050f91908101906107ea565b89878151811061051b57fe5b6020026020010189888151811061052e57fe5b60209081029190910101929092529190526002549093509091506001600160a01b03808316911614156106235760025487516001600160a01b039091169063dc578e0c9089908690811061057e57fe5b60200260200101516040518263ffffffff1660e01b81526004016105a29190610af3565b60206040518083038186803b1580156105ba57600080fd5b505afa1580156105ce573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052506105f291908101906107cc565b8484815181106105fe57fe5b60200260200101906001600160a01b031690816001600160a01b031681525050610651565b8084848151811061063057fe5b60200260200101906001600160a01b031690816001600160a01b0316815250505b5050600101610467565b5092989197509550909350915050565b610673610222565b61068f5760405162461bcd60e51b815260040161013490610b04565b6106988161069f565b50565b3390565b6001600160a01b0381166106c55760405162461bcd60e51b815260040161013490610b14565b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b803561072b81610bed565b92915050565b805161072b81610bed565b805161072b81610c01565b600082601f83011261075857600080fd5b815161076b61076682610b59565b610b32565b9150808252602083016020830185838301111561078757600080fd5b610792838284610bb3565b50505092915050565b805161072b81610c0a565b6000602082840312156107b857600080fd5b60006107c48484610720565b949350505050565b6000602082840312156107de57600080fd5b60006107c48484610731565b6000806000806080858703121561080057600080fd5b600061080c8787610731565b945050602085015167ffffffffffffffff81111561082957600080fd5b61083587828801610747565b935050604085015167ffffffffffffffff81111561085257600080fd5b61085e87828801610747565b925050606061086f8782880161073c565b91505092959194509250565b60006020828403121561088d57600080fd5b815167ffffffffffffffff8111156108a457600080fd5b6107c484828501610747565b6000602082840312156108c257600080fd5b60006107c4848461079b565b60006108da83836108f5565b505060200190565b60006108ee83836109d4565b9392505050565b6108fe81610b94565b82525050565b600061090f82610b87565b6109198185610b8b565b935061092483610b81565b8060005b8381101561095257815161093c88826108ce565b975061094783610b81565b925050600101610928565b509495945050505050565b600061096882610b87565b6109728185610b8b565b93508360208202850161098485610b81565b8060005b858110156109be57848403895281516109a185826108e2565b94506109ac83610b81565b60209a909a0199925050600101610988565b5091979650505050505050565b6108fe81610b9f565b60006109df82610b87565b6109e98185610b8b565b93506109f9818560208601610bb3565b610a0281610be3565b9093019392505050565b6000610a19601683610b8b565b7527bbb730b136329d103737ba103a34329037bbb732b960511b815260200192915050565b6000610a4b601883610b8b565b7f4f776e61626c653a206e6f207a65726f20616464726573730000000000000000815260200192915050565b6108fe81610bb0565b6020810161072b82846108f5565b60808082528101610a9f818761095d565b90508181036020830152610ab3818661095d565b90508181036040830152610ac7818561095d565b90508181036060830152610adb8184610904565b9695505050505050565b6020810161072b82846109cb565b602080825281016108ee81846109d4565b6020808252810161072b81610a0c565b6020808252810161072b81610a3e565b6020810161072b8284610a77565b60405181810167ffffffffffffffff81118282101715610b5157600080fd5b604052919050565b600067ffffffffffffffff821115610b7057600080fd5b506020601f91909101601f19160190565b60200190565b5190565b90815260200190565b600061072b82610ba4565b151590565b6001600160a01b031690565b90565b60005b83811015610bce578181015183820152602001610bb6565b83811115610bdd576000848401525b50505050565b601f01601f191690565b610bf681610b94565b811461069857600080fd5b610bf681610b9f565b610bf681610bb056fea365627a7a723158209af0ed2a9c0c220cc71cb8d88c9c26938d2bf1decc9472d54f01fb82a5c3a5456c6578706572696d656e74616cf564736f6c63430005110040"
 
 // DeployVerifierListAggregator deploys a new Ethereum contract, binding an instance of VerifierListAggregator to it.
-func DeployVerifierListAggregator(auth *bind.TransactOpts, backend bind.ContractBackend, _verifierListContract common.Address) (common.Address, *types.Transaction, *VerifierListAggregator, error) {
+func DeployVerifierListAggregator(auth *bind.TransactOpts, backend bind.ContractBackend, _verifierListContract common.Address, _verifierOwnerManagerContract common.Address) (common.Address, *types.Transaction, *VerifierListAggregator, error) {
 	parsed, err := abi.JSON(strings.NewReader(VerifierListAggregatorABI))
 	if err != nil {
 		return common.Address{}, nil, nil, err
 	}
 
-	address, tx, contract, err := bind.DeployContract(auth, parsed, common.FromHex(VerifierListAggregatorBin), backend, _verifierListContract)
+	address, tx, contract, err := bind.DeployContract(auth, parsed, common.FromHex(VerifierListAggregatorBin), backend, _verifierListContract, _verifierOwnerManagerContract)
 	if err != nil {
 		return common.Address{}, nil, nil, err
 	}
@@ -1696,6 +1697,27 @@ func (_VerifierListAggregator *VerifierListAggregatorTransactorSession) SetVerif
 	return _VerifierListAggregator.Contract.SetVerifier(&_VerifierListAggregator.TransactOpts, addr)
 }
 
+// SetVerifierOwner is a paid mutator transaction binding the contract method 0x2c713f9f.
+//
+// Solidity: function setVerifierOwner(address addr) returns()
+func (_VerifierListAggregator *VerifierListAggregatorTransactor) SetVerifierOwner(opts *bind.TransactOpts, addr common.Address) (*types.Transaction, error) {
+	return _VerifierListAggregator.contract.Transact(opts, "setVerifierOwner", addr)
+}
+
+// SetVerifierOwner is a paid mutator transaction binding the contract method 0x2c713f9f.
+//
+// Solidity: function setVerifierOwner(address addr) returns()
+func (_VerifierListAggregator *VerifierListAggregatorSession) SetVerifierOwner(addr common.Address) (*types.Transaction, error) {
+	return _VerifierListAggregator.Contract.SetVerifierOwner(&_VerifierListAggregator.TransactOpts, addr)
+}
+
+// SetVerifierOwner is a paid mutator transaction binding the contract method 0x2c713f9f.
+//
+// Solidity: function setVerifierOwner(address addr) returns()
+func (_VerifierListAggregator *VerifierListAggregatorTransactorSession) SetVerifierOwner(addr common.Address) (*types.Transaction, error) {
+	return _VerifierListAggregator.Contract.SetVerifierOwner(&_VerifierListAggregator.TransactOpts, addr)
+}
+
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
 // Solidity: function transferOwnership(address newOwner) returns()
@@ -1864,6 +1886,542 @@ func (_VerifierListAggregator *VerifierListAggregatorFilterer) WatchOwnershipTra
 func (_VerifierListAggregator *VerifierListAggregatorFilterer) ParseOwnershipTransferred(log types.Log) (*VerifierListAggregatorOwnershipTransferred, error) {
 	event := new(VerifierListAggregatorOwnershipTransferred)
 	if err := _VerifierListAggregator.contract.UnpackLog(event, "OwnershipTransferred", log); err != nil {
+		return nil, err
+	}
+	return event, nil
+}
+
+// VerifierOwnerManagerABI is the input ABI used to generate the binding from.
+const VerifierOwnerManagerABI = "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_verifierListContract\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"string\",\"name\":\"verifier\",\"type\":\"string\"}],\"name\":\"getOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"string\",\"name\":\"verifier\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"setOwner\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_verifierListContract\",\"type\":\"address\"}],\"name\":\"setVerifier\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"string\",\"name\":\"verifier\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"verifierParams\",\"type\":\"string\"}],\"name\":\"updateVerifier\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"name\":\"verifierOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
+
+// VerifierOwnerManagerFuncSigs maps the 4-byte function signature to its string representation.
+var VerifierOwnerManagerFuncSigs = map[string]string{
+	"4aaf4a12": "getOwner(string)",
+	"8f32d59b": "isOwner()",
+	"8da5cb5b": "owner()",
+	"715018a6": "renounceOwnership()",
+	"092b25e9": "setOwner(string,address)",
+	"5437988d": "setVerifier(address)",
+	"f2fde38b": "transferOwnership(address)",
+	"59fb00f9": "updateVerifier(string,string)",
+	"dc578e0c": "verifierOwner(string)",
+}
+
+// VerifierOwnerManagerBin is the compiled bytecode used for deploying new contracts.
+var VerifierOwnerManagerBin = "0x608060405234801561001057600080fd5b50604051610bc6380380610bc68339818101604052602081101561003357600080fd5b505160006100486001600160e01b036100b716565b600080546001600160a01b0319166001600160a01b0383169081178255604051929350917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a350600180546001600160a01b0319166001600160a01b03929092169190911790556100bb565b3390565b610afc806100ca6000396000f3fe608060405234801561001057600080fd5b50600436106100935760003560e01c8063715018a611610066578063715018a61461027f5780638da5cb5b146102875780638f32d59b1461028f578063dc578e0c146102ab578063f2fde38b1461034f57610093565b8063092b25e9146100985780634aaf4a12146101115780635437988d1461019b57806359fb00f9146101c1575b600080fd5b61010f600480360360408110156100ae57600080fd5b810190602081018135600160201b8111156100c857600080fd5b8201836020820111156100da57600080fd5b803590602001918460018302840111600160201b831117156100fb57600080fd5b9193509150356001600160a01b0316610375565b005b61017f6004803603602081101561012757600080fd5b810190602081018135600160201b81111561014157600080fd5b82018360208201111561015357600080fd5b803590602001918460018302840111600160201b8311171561017457600080fd5b509092509050610585565b604080516001600160a01b039092168252519081900360200190f35b61010f600480360360208110156101b157600080fd5b50356001600160a01b03166105bf565b61010f600480360360408110156101d757600080fd5b810190602081018135600160201b8111156101f157600080fd5b82018360208201111561020357600080fd5b803590602001918460018302840111600160201b8311171561022457600080fd5b919390929091602081019035600160201b81111561024157600080fd5b82018360208201111561025357600080fd5b803590602001918460018302840111600160201b8311171561027457600080fd5b509092509050610633565b61010f6108ba565b61017f610956565b610297610965565b604080519115158252519081900360200190f35b61017f600480360360208110156102c157600080fd5b810190602081018135600160201b8111156102db57600080fd5b8201836020820111156102ed57600080fd5b803590602001918460018302840111600160201b8311171561030e57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550610989945050505050565b61010f6004803603602081101561036557600080fd5b50356001600160a01b03166109af565b82828080601f016020809104026020016040519081016040528093929190818152602001838380828437600092018290525060405185519194506002935085925090819060208401908083835b602083106103e15780518252601f1990920191602091820191016103c2565b51815160209384036101000a60001901801990921691161790529201948552506040519384900301909220546001600160a01b03169290921415915061047590505761042b610965565b610470576040805162461bcd60e51b81526020600482015260116024820152703737ba103232b330bab63a1037bbb732b960791b604482015290519081900360640190fd5b610537565b336001600160a01b03166002826040518082805190602001908083835b602083106104b15780518252601f199092019160209182019101610492565b51815160209384036101000a60001901801990921691161790529201948552506040519384900301909220546001600160a01b03169290921491506105379050576040805162461bcd60e51b81526020600482015260156024820152743737ba1037bbb732b91037b3103b32b934b334b2b960591b604482015290519081900360640190fd5b8160028585604051808383808284379190910194855250506040519283900360200190922080546001600160a01b03949094166001600160a01b031990941693909317909255505050505050565b6000600283836040518083838082843791909101948552505060405192839003602001909220546001600160a01b03169250505092915050565b6105c7610965565b610611576040805162461bcd60e51b815260206004820152601660248201527527bbb730b136329d103737ba103a34329037bbb732b960511b604482015290519081900360640190fd5b600180546001600160a01b0319166001600160a01b0392909216919091179055565b83838080601f016020809104026020016040519081016040528093929190818152602001838380828437600092018290525060405185519194506002935085925090819060208401908083835b6020831061069f5780518252601f199092019160209182019101610680565b51815160209384036101000a60001901801990921691161790529201948552506040519384900301909220546001600160a01b0316929092141591506107339050576106e9610965565b61072e576040805162461bcd60e51b81526020600482015260116024820152703737ba103232b330bab63a1037bbb732b960791b604482015290519081900360640190fd5b6107f5565b336001600160a01b03166002826040518082805190602001908083835b6020831061076f5780518252601f199092019160209182019101610750565b51815160209384036101000a60001901801990921691161790529201948552506040519384900301909220546001600160a01b03169290921491506107f59050576040805162461bcd60e51b81526020600482015260156024820152743737ba1037bbb732b91037b3103b32b934b334b2b960591b604482015290519081900360640190fd5b600154604080516359fb00f960e01b815260048101918252604481018790526001600160a01b03909216916359fb00f99188918891889188919081906024810190606401878780828437600083820152601f01601f191690910184810383528581526020019050858580828437600081840152601f19601f8201169050808301925050509650505050505050600060405180830381600087803b15801561089b57600080fd5b505af11580156108af573d6000803e3d6000fd5b505050505050505050565b6108c2610965565b61090c576040805162461bcd60e51b815260206004820152601660248201527527bbb730b136329d103737ba103a34329037bbb732b960511b604482015290519081900360640190fd5b600080546040516001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546001600160a01b0319169055565b6000546001600160a01b031690565b600080546001600160a01b031661097a610a0d565b6001600160a01b031614905090565b80516020818301810180516002825292820191909301209152546001600160a01b031681565b6109b7610965565b610a01576040805162461bcd60e51b815260206004820152601660248201527527bbb730b136329d103737ba103a34329037bbb732b960511b604482015290519081900360640190fd5b610a0a81610a11565b50565b3390565b6001600160a01b038116610a6c576040805162461bcd60e51b815260206004820152601860248201527f4f776e61626c653a206e6f207a65726f20616464726573730000000000000000604482015290519081900360640190fd5b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b039290921691909117905556fea265627a7a723158205df2c21880597bffeb2e1f8eb49f88418624c0816973f3da8516ef0cb96fce0c64736f6c63430005110032"
+
+// DeployVerifierOwnerManager deploys a new Ethereum contract, binding an instance of VerifierOwnerManager to it.
+func DeployVerifierOwnerManager(auth *bind.TransactOpts, backend bind.ContractBackend, _verifierListContract common.Address) (common.Address, *types.Transaction, *VerifierOwnerManager, error) {
+	parsed, err := abi.JSON(strings.NewReader(VerifierOwnerManagerABI))
+	if err != nil {
+		return common.Address{}, nil, nil, err
+	}
+
+	address, tx, contract, err := bind.DeployContract(auth, parsed, common.FromHex(VerifierOwnerManagerBin), backend, _verifierListContract)
+	if err != nil {
+		return common.Address{}, nil, nil, err
+	}
+	return address, tx, &VerifierOwnerManager{VerifierOwnerManagerCaller: VerifierOwnerManagerCaller{contract: contract}, VerifierOwnerManagerTransactor: VerifierOwnerManagerTransactor{contract: contract}, VerifierOwnerManagerFilterer: VerifierOwnerManagerFilterer{contract: contract}}, nil
+}
+
+// VerifierOwnerManager is an auto generated Go binding around an Ethereum contract.
+type VerifierOwnerManager struct {
+	VerifierOwnerManagerCaller     // Read-only binding to the contract
+	VerifierOwnerManagerTransactor // Write-only binding to the contract
+	VerifierOwnerManagerFilterer   // Log filterer for contract events
+}
+
+// VerifierOwnerManagerCaller is an auto generated read-only Go binding around an Ethereum contract.
+type VerifierOwnerManagerCaller struct {
+	contract *bind.BoundContract // Generic contract wrapper for the low level calls
+}
+
+// VerifierOwnerManagerTransactor is an auto generated write-only Go binding around an Ethereum contract.
+type VerifierOwnerManagerTransactor struct {
+	contract *bind.BoundContract // Generic contract wrapper for the low level calls
+}
+
+// VerifierOwnerManagerFilterer is an auto generated log filtering Go binding around an Ethereum contract events.
+type VerifierOwnerManagerFilterer struct {
+	contract *bind.BoundContract // Generic contract wrapper for the low level calls
+}
+
+// VerifierOwnerManagerSession is an auto generated Go binding around an Ethereum contract,
+// with pre-set call and transact options.
+type VerifierOwnerManagerSession struct {
+	Contract     *VerifierOwnerManager // Generic contract binding to set the session for
+	CallOpts     bind.CallOpts         // Call options to use throughout this session
+	TransactOpts bind.TransactOpts     // Transaction auth options to use throughout this session
+}
+
+// VerifierOwnerManagerCallerSession is an auto generated read-only Go binding around an Ethereum contract,
+// with pre-set call options.
+type VerifierOwnerManagerCallerSession struct {
+	Contract *VerifierOwnerManagerCaller // Generic contract caller binding to set the session for
+	CallOpts bind.CallOpts               // Call options to use throughout this session
+}
+
+// VerifierOwnerManagerTransactorSession is an auto generated write-only Go binding around an Ethereum contract,
+// with pre-set transact options.
+type VerifierOwnerManagerTransactorSession struct {
+	Contract     *VerifierOwnerManagerTransactor // Generic contract transactor binding to set the session for
+	TransactOpts bind.TransactOpts               // Transaction auth options to use throughout this session
+}
+
+// VerifierOwnerManagerRaw is an auto generated low-level Go binding around an Ethereum contract.
+type VerifierOwnerManagerRaw struct {
+	Contract *VerifierOwnerManager // Generic contract binding to access the raw methods on
+}
+
+// VerifierOwnerManagerCallerRaw is an auto generated low-level read-only Go binding around an Ethereum contract.
+type VerifierOwnerManagerCallerRaw struct {
+	Contract *VerifierOwnerManagerCaller // Generic read-only contract binding to access the raw methods on
+}
+
+// VerifierOwnerManagerTransactorRaw is an auto generated low-level write-only Go binding around an Ethereum contract.
+type VerifierOwnerManagerTransactorRaw struct {
+	Contract *VerifierOwnerManagerTransactor // Generic write-only contract binding to access the raw methods on
+}
+
+// NewVerifierOwnerManager creates a new instance of VerifierOwnerManager, bound to a specific deployed contract.
+func NewVerifierOwnerManager(address common.Address, backend bind.ContractBackend) (*VerifierOwnerManager, error) {
+	contract, err := bindVerifierOwnerManager(address, backend, backend, backend)
+	if err != nil {
+		return nil, err
+	}
+	return &VerifierOwnerManager{VerifierOwnerManagerCaller: VerifierOwnerManagerCaller{contract: contract}, VerifierOwnerManagerTransactor: VerifierOwnerManagerTransactor{contract: contract}, VerifierOwnerManagerFilterer: VerifierOwnerManagerFilterer{contract: contract}}, nil
+}
+
+// NewVerifierOwnerManagerCaller creates a new read-only instance of VerifierOwnerManager, bound to a specific deployed contract.
+func NewVerifierOwnerManagerCaller(address common.Address, caller bind.ContractCaller) (*VerifierOwnerManagerCaller, error) {
+	contract, err := bindVerifierOwnerManager(address, caller, nil, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &VerifierOwnerManagerCaller{contract: contract}, nil
+}
+
+// NewVerifierOwnerManagerTransactor creates a new write-only instance of VerifierOwnerManager, bound to a specific deployed contract.
+func NewVerifierOwnerManagerTransactor(address common.Address, transactor bind.ContractTransactor) (*VerifierOwnerManagerTransactor, error) {
+	contract, err := bindVerifierOwnerManager(address, nil, transactor, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &VerifierOwnerManagerTransactor{contract: contract}, nil
+}
+
+// NewVerifierOwnerManagerFilterer creates a new log filterer instance of VerifierOwnerManager, bound to a specific deployed contract.
+func NewVerifierOwnerManagerFilterer(address common.Address, filterer bind.ContractFilterer) (*VerifierOwnerManagerFilterer, error) {
+	contract, err := bindVerifierOwnerManager(address, nil, nil, filterer)
+	if err != nil {
+		return nil, err
+	}
+	return &VerifierOwnerManagerFilterer{contract: contract}, nil
+}
+
+// bindVerifierOwnerManager binds a generic wrapper to an already deployed contract.
+func bindVerifierOwnerManager(address common.Address, caller bind.ContractCaller, transactor bind.ContractTransactor, filterer bind.ContractFilterer) (*bind.BoundContract, error) {
+	parsed, err := abi.JSON(strings.NewReader(VerifierOwnerManagerABI))
+	if err != nil {
+		return nil, err
+	}
+	return bind.NewBoundContract(address, parsed, caller, transactor, filterer), nil
+}
+
+// Call invokes the (constant) contract method with params as input values and
+// sets the output to result. The result type might be a single field for simple
+// returns, a slice of interfaces for anonymous returns and a struct for named
+// returns.
+func (_VerifierOwnerManager *VerifierOwnerManagerRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+	return _VerifierOwnerManager.Contract.VerifierOwnerManagerCaller.contract.Call(opts, result, method, params...)
+}
+
+// Transfer initiates a plain transaction to move funds to the contract, calling
+// its default method if one is available.
+func (_VerifierOwnerManager *VerifierOwnerManagerRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.VerifierOwnerManagerTransactor.contract.Transfer(opts)
+}
+
+// Transact invokes the (paid) contract method with params as input values.
+func (_VerifierOwnerManager *VerifierOwnerManagerRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.VerifierOwnerManagerTransactor.contract.Transact(opts, method, params...)
+}
+
+// Call invokes the (constant) contract method with params as input values and
+// sets the output to result. The result type might be a single field for simple
+// returns, a slice of interfaces for anonymous returns and a struct for named
+// returns.
+func (_VerifierOwnerManager *VerifierOwnerManagerCallerRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+	return _VerifierOwnerManager.Contract.contract.Call(opts, result, method, params...)
+}
+
+// Transfer initiates a plain transaction to move funds to the contract, calling
+// its default method if one is available.
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactorRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.contract.Transfer(opts)
+}
+
+// Transact invokes the (paid) contract method with params as input values.
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactorRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.contract.Transact(opts, method, params...)
+}
+
+// GetOwner is a free data retrieval call binding the contract method 0x4aaf4a12.
+//
+// Solidity: function getOwner(string verifier) view returns(address)
+func (_VerifierOwnerManager *VerifierOwnerManagerCaller) GetOwner(opts *bind.CallOpts, verifier string) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _VerifierOwnerManager.contract.Call(opts, out, "getOwner", verifier)
+	return *ret0, err
+}
+
+// GetOwner is a free data retrieval call binding the contract method 0x4aaf4a12.
+//
+// Solidity: function getOwner(string verifier) view returns(address)
+func (_VerifierOwnerManager *VerifierOwnerManagerSession) GetOwner(verifier string) (common.Address, error) {
+	return _VerifierOwnerManager.Contract.GetOwner(&_VerifierOwnerManager.CallOpts, verifier)
+}
+
+// GetOwner is a free data retrieval call binding the contract method 0x4aaf4a12.
+//
+// Solidity: function getOwner(string verifier) view returns(address)
+func (_VerifierOwnerManager *VerifierOwnerManagerCallerSession) GetOwner(verifier string) (common.Address, error) {
+	return _VerifierOwnerManager.Contract.GetOwner(&_VerifierOwnerManager.CallOpts, verifier)
+}
+
+// IsOwner is a free data retrieval call binding the contract method 0x8f32d59b.
+//
+// Solidity: function isOwner() view returns(bool)
+func (_VerifierOwnerManager *VerifierOwnerManagerCaller) IsOwner(opts *bind.CallOpts) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _VerifierOwnerManager.contract.Call(opts, out, "isOwner")
+	return *ret0, err
+}
+
+// IsOwner is a free data retrieval call binding the contract method 0x8f32d59b.
+//
+// Solidity: function isOwner() view returns(bool)
+func (_VerifierOwnerManager *VerifierOwnerManagerSession) IsOwner() (bool, error) {
+	return _VerifierOwnerManager.Contract.IsOwner(&_VerifierOwnerManager.CallOpts)
+}
+
+// IsOwner is a free data retrieval call binding the contract method 0x8f32d59b.
+//
+// Solidity: function isOwner() view returns(bool)
+func (_VerifierOwnerManager *VerifierOwnerManagerCallerSession) IsOwner() (bool, error) {
+	return _VerifierOwnerManager.Contract.IsOwner(&_VerifierOwnerManager.CallOpts)
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() view returns(address)
+func (_VerifierOwnerManager *VerifierOwnerManagerCaller) Owner(opts *bind.CallOpts) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _VerifierOwnerManager.contract.Call(opts, out, "owner")
+	return *ret0, err
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() view returns(address)
+func (_VerifierOwnerManager *VerifierOwnerManagerSession) Owner() (common.Address, error) {
+	return _VerifierOwnerManager.Contract.Owner(&_VerifierOwnerManager.CallOpts)
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() view returns(address)
+func (_VerifierOwnerManager *VerifierOwnerManagerCallerSession) Owner() (common.Address, error) {
+	return _VerifierOwnerManager.Contract.Owner(&_VerifierOwnerManager.CallOpts)
+}
+
+// VerifierOwner is a free data retrieval call binding the contract method 0xdc578e0c.
+//
+// Solidity: function verifierOwner(string ) view returns(address)
+func (_VerifierOwnerManager *VerifierOwnerManagerCaller) VerifierOwner(opts *bind.CallOpts, arg0 string) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _VerifierOwnerManager.contract.Call(opts, out, "verifierOwner", arg0)
+	return *ret0, err
+}
+
+// VerifierOwner is a free data retrieval call binding the contract method 0xdc578e0c.
+//
+// Solidity: function verifierOwner(string ) view returns(address)
+func (_VerifierOwnerManager *VerifierOwnerManagerSession) VerifierOwner(arg0 string) (common.Address, error) {
+	return _VerifierOwnerManager.Contract.VerifierOwner(&_VerifierOwnerManager.CallOpts, arg0)
+}
+
+// VerifierOwner is a free data retrieval call binding the contract method 0xdc578e0c.
+//
+// Solidity: function verifierOwner(string ) view returns(address)
+func (_VerifierOwnerManager *VerifierOwnerManagerCallerSession) VerifierOwner(arg0 string) (common.Address, error) {
+	return _VerifierOwnerManager.Contract.VerifierOwner(&_VerifierOwnerManager.CallOpts, arg0)
+}
+
+// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+//
+// Solidity: function renounceOwnership() returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactor) RenounceOwnership(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _VerifierOwnerManager.contract.Transact(opts, "renounceOwnership")
+}
+
+// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+//
+// Solidity: function renounceOwnership() returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerSession) RenounceOwnership() (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.RenounceOwnership(&_VerifierOwnerManager.TransactOpts)
+}
+
+// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+//
+// Solidity: function renounceOwnership() returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactorSession) RenounceOwnership() (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.RenounceOwnership(&_VerifierOwnerManager.TransactOpts)
+}
+
+// SetOwner is a paid mutator transaction binding the contract method 0x092b25e9.
+//
+// Solidity: function setOwner(string verifier, address newOwner) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactor) SetOwner(opts *bind.TransactOpts, verifier string, newOwner common.Address) (*types.Transaction, error) {
+	return _VerifierOwnerManager.contract.Transact(opts, "setOwner", verifier, newOwner)
+}
+
+// SetOwner is a paid mutator transaction binding the contract method 0x092b25e9.
+//
+// Solidity: function setOwner(string verifier, address newOwner) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerSession) SetOwner(verifier string, newOwner common.Address) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.SetOwner(&_VerifierOwnerManager.TransactOpts, verifier, newOwner)
+}
+
+// SetOwner is a paid mutator transaction binding the contract method 0x092b25e9.
+//
+// Solidity: function setOwner(string verifier, address newOwner) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactorSession) SetOwner(verifier string, newOwner common.Address) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.SetOwner(&_VerifierOwnerManager.TransactOpts, verifier, newOwner)
+}
+
+// SetVerifier is a paid mutator transaction binding the contract method 0x5437988d.
+//
+// Solidity: function setVerifier(address _verifierListContract) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactor) SetVerifier(opts *bind.TransactOpts, _verifierListContract common.Address) (*types.Transaction, error) {
+	return _VerifierOwnerManager.contract.Transact(opts, "setVerifier", _verifierListContract)
+}
+
+// SetVerifier is a paid mutator transaction binding the contract method 0x5437988d.
+//
+// Solidity: function setVerifier(address _verifierListContract) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerSession) SetVerifier(_verifierListContract common.Address) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.SetVerifier(&_VerifierOwnerManager.TransactOpts, _verifierListContract)
+}
+
+// SetVerifier is a paid mutator transaction binding the contract method 0x5437988d.
+//
+// Solidity: function setVerifier(address _verifierListContract) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactorSession) SetVerifier(_verifierListContract common.Address) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.SetVerifier(&_VerifierOwnerManager.TransactOpts, _verifierListContract)
+}
+
+// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
+//
+// Solidity: function transferOwnership(address newOwner) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactor) TransferOwnership(opts *bind.TransactOpts, newOwner common.Address) (*types.Transaction, error) {
+	return _VerifierOwnerManager.contract.Transact(opts, "transferOwnership", newOwner)
+}
+
+// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
+//
+// Solidity: function transferOwnership(address newOwner) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerSession) TransferOwnership(newOwner common.Address) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.TransferOwnership(&_VerifierOwnerManager.TransactOpts, newOwner)
+}
+
+// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
+//
+// Solidity: function transferOwnership(address newOwner) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactorSession) TransferOwnership(newOwner common.Address) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.TransferOwnership(&_VerifierOwnerManager.TransactOpts, newOwner)
+}
+
+// UpdateVerifier is a paid mutator transaction binding the contract method 0x59fb00f9.
+//
+// Solidity: function updateVerifier(string verifier, string verifierParams) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactor) UpdateVerifier(opts *bind.TransactOpts, verifier string, verifierParams string) (*types.Transaction, error) {
+	return _VerifierOwnerManager.contract.Transact(opts, "updateVerifier", verifier, verifierParams)
+}
+
+// UpdateVerifier is a paid mutator transaction binding the contract method 0x59fb00f9.
+//
+// Solidity: function updateVerifier(string verifier, string verifierParams) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerSession) UpdateVerifier(verifier string, verifierParams string) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.UpdateVerifier(&_VerifierOwnerManager.TransactOpts, verifier, verifierParams)
+}
+
+// UpdateVerifier is a paid mutator transaction binding the contract method 0x59fb00f9.
+//
+// Solidity: function updateVerifier(string verifier, string verifierParams) returns()
+func (_VerifierOwnerManager *VerifierOwnerManagerTransactorSession) UpdateVerifier(verifier string, verifierParams string) (*types.Transaction, error) {
+	return _VerifierOwnerManager.Contract.UpdateVerifier(&_VerifierOwnerManager.TransactOpts, verifier, verifierParams)
+}
+
+// VerifierOwnerManagerOwnershipTransferredIterator is returned from FilterOwnershipTransferred and is used to iterate over the raw logs and unpacked data for OwnershipTransferred events raised by the VerifierOwnerManager contract.
+type VerifierOwnerManagerOwnershipTransferredIterator struct {
+	Event *VerifierOwnerManagerOwnershipTransferred // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *VerifierOwnerManagerOwnershipTransferredIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(VerifierOwnerManagerOwnershipTransferred)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(VerifierOwnerManagerOwnershipTransferred)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *VerifierOwnerManagerOwnershipTransferredIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *VerifierOwnerManagerOwnershipTransferredIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// VerifierOwnerManagerOwnershipTransferred represents a OwnershipTransferred event raised by the VerifierOwnerManager contract.
+type VerifierOwnerManagerOwnershipTransferred struct {
+	PreviousOwner common.Address
+	NewOwner      common.Address
+	Raw           types.Log // Blockchain specific contextual infos
+}
+
+// FilterOwnershipTransferred is a free log retrieval operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
+//
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+func (_VerifierOwnerManager *VerifierOwnerManagerFilterer) FilterOwnershipTransferred(opts *bind.FilterOpts, previousOwner []common.Address, newOwner []common.Address) (*VerifierOwnerManagerOwnershipTransferredIterator, error) {
+
+	var previousOwnerRule []interface{}
+	for _, previousOwnerItem := range previousOwner {
+		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
+	}
+	var newOwnerRule []interface{}
+	for _, newOwnerItem := range newOwner {
+		newOwnerRule = append(newOwnerRule, newOwnerItem)
+	}
+
+	logs, sub, err := _VerifierOwnerManager.contract.FilterLogs(opts, "OwnershipTransferred", previousOwnerRule, newOwnerRule)
+	if err != nil {
+		return nil, err
+	}
+	return &VerifierOwnerManagerOwnershipTransferredIterator{contract: _VerifierOwnerManager.contract, event: "OwnershipTransferred", logs: logs, sub: sub}, nil
+}
+
+// WatchOwnershipTransferred is a free log subscription operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
+//
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+func (_VerifierOwnerManager *VerifierOwnerManagerFilterer) WatchOwnershipTransferred(opts *bind.WatchOpts, sink chan<- *VerifierOwnerManagerOwnershipTransferred, previousOwner []common.Address, newOwner []common.Address) (event.Subscription, error) {
+
+	var previousOwnerRule []interface{}
+	for _, previousOwnerItem := range previousOwner {
+		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
+	}
+	var newOwnerRule []interface{}
+	for _, newOwnerItem := range newOwner {
+		newOwnerRule = append(newOwnerRule, newOwnerItem)
+	}
+
+	logs, sub, err := _VerifierOwnerManager.contract.WatchLogs(opts, "OwnershipTransferred", previousOwnerRule, newOwnerRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(VerifierOwnerManagerOwnershipTransferred)
+				if err := _VerifierOwnerManager.contract.UnpackLog(event, "OwnershipTransferred", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseOwnershipTransferred is a log parse operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
+//
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+func (_VerifierOwnerManager *VerifierOwnerManagerFilterer) ParseOwnershipTransferred(log types.Log) (*VerifierOwnerManagerOwnershipTransferred, error) {
+	event := new(VerifierOwnerManagerOwnershipTransferred)
+	if err := _VerifierOwnerManager.contract.UnpackLog(event, "OwnershipTransferred", log); err != nil {
 		return nil, err
 	}
 	return event, nil
