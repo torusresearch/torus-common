@@ -11,6 +11,7 @@ import (
 	"github.com/torusresearch/torus-common/eth/gobindings/nodelist"
 	"github.com/torusresearch/torus-common/eth/gobindings/verifierListAggregator"
 	"github.com/torusresearch/torus-common/eth/gobindings/verifierOwnerManager"
+	"github.com/torusresearch/torus-common/eth/gobindings/verifierRouter"
 	"github.com/torusresearch/torus-common/eth/gobindings/verifierlist"
 )
 
@@ -63,13 +64,22 @@ func (e *EthClient) DeployContract(key *ecdsa.PrivateKey) (nodeListAddress commo
 }
 
 // DeployAdditionalContracts deploys additional contracts to simulate the production setup
-func (e *EthClient) DeployAdditionalContracts(key *ecdsa.PrivateKey, verifierListAddress, nodeListAddress common.Address, epoch *big.Int) (verifierOwnerManagerAddress common.Address, verifierOwnerManagerContract *verifierOwnerManager.VerifierOwnerManager, verifierListAggregatorAddress common.Address, verifierListAggregatorContract *verifierListAggregator.VerifierListAggregator, nodeListProxyAddress common.Address, nodeListProxyContract *nodeListProxy.NodeListProxy, err error) {
+func (e *EthClient) DeployAdditionalContracts(key *ecdsa.PrivateKey, verifierListAddress, nodeListAddress common.Address, epoch *big.Int) (verifierOwnerManagerAddress common.Address, verifierOwnerManagerContract *verifierOwnerManager.VerifierOwnerManager, verifierRouterAddress common.Address, verifierRouterContract *VerifierRouter.VerifierRouter, verifierListAggregatorAddress common.Address, verifierListAggregatorContract *verifierListAggregator.VerifierListAggregator, nodeListProxyAddress common.Address, nodeListProxyContract *nodeListProxy.NodeListProxy, err error) {
 	blockchain := e.ethclient
 
 	// Get credentials for the account to charge for contract deployments
 	auth := bind.NewKeyedTransactor(key)
 
 	verifierOwnerManagerAddress, _, verifierOwnerManagerContract, err = verifierOwnerManager.DeployVerifierOwnerManager(
+		auth,
+		blockchain,
+		verifierListAddress,
+	)
+	if err != nil {
+		return
+	}
+
+	verifierRouterAddress, _, verifierRouterContract, err = VerifierRouter.DeployVerifierRouter(
 		auth,
 		blockchain,
 		verifierListAddress,
