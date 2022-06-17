@@ -3,12 +3,12 @@ package crypto
 import (
 	"crypto/ecdsa"
 	"encoding/hex"
+	"log"
 	"math/big"
 
 	ethCommon "github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	ethCrypto "github.com/ethereum/go-ethereum/crypto"
-	"github.com/prometheus/common/log"
 	"github.com/torusresearch/bijson"
 	"github.com/torusresearch/torus-common/common"
 	"github.com/torusresearch/torus-common/secp256k1"
