@@ -1,3 +1,6 @@
+# filippo.io/edwards25519 v1.0.0
+filippo.io/edwards25519
+filippo.io/edwards25519/field
 # github.com/allegro/bigcache v1.2.1
 github.com/allegro/bigcache
 github.com/allegro/bigcache/queue
@@ -5,8 +8,11 @@ github.com/allegro/bigcache/queue
 github.com/aristanetworks/goarista/monotime
 # github.com/beorn7/perks v1.0.1
 github.com/beorn7/perks/quantile
-# github.com/btcsuite/btcd v0.20.1-beta
+# github.com/btcsuite/btcd v0.21.0-beta.0.20201114000516-e9c7a5ac6401
 github.com/btcsuite/btcd/btcec
+# github.com/bwesterb/go-ristretto v1.2.0
+github.com/bwesterb/go-ristretto
+github.com/bwesterb/go-ristretto/edwards25519
 # github.com/cespare/xxhash/v2 v2.1.0
 github.com/cespare/xxhash/v2
 # github.com/davecgh/go-spew v1.1.1
@@ -93,7 +99,7 @@ github.com/rs/cors
 github.com/rs/xhandler
 # github.com/sirupsen/logrus v1.4.2
 github.com/sirupsen/logrus
-# github.com/stretchr/testify v1.5.1
+# github.com/stretchr/testify v1.7.0
 github.com/stretchr/testify/assert
 # github.com/syndtr/goleveldb v1.0.1-0.20190923125748-758128399b1d
 github.com/syndtr/goleveldb/leveldb
@@ -110,19 +116,20 @@ github.com/syndtr/goleveldb/leveldb/table
 github.com/syndtr/goleveldb/leveldb/util
 # github.com/torusresearch/bijson v0.0.0-20200227065959-98da85656344
 github.com/torusresearch/bijson
-# golang.org/x/crypto v0.0.0-20191202143827-86a70503ff7e
+# golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97
 golang.org/x/crypto/pbkdf2
 golang.org/x/crypto/ripemd160
 golang.org/x/crypto/scrypt
 golang.org/x/crypto/sha3
-# golang.org/x/net v0.0.0-20190628185345-da137c7871d7
+# golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
 golang.org/x/net/context
 golang.org/x/net/websocket
-# golang.org/x/sys v0.0.0-20191010194322-b09406accb47
+# golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c
 golang.org/x/sys/cpu
+golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 # gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce
 gopkg.in/natefinch/npipe.v2
-# gopkg.in/yaml.v2 v2.2.2
-gopkg.in/yaml.v2
+# gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
+gopkg.in/yaml.v3
