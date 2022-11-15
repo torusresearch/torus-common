@@ -15,6 +15,31 @@ github.com/bwesterb/go-ristretto
 github.com/bwesterb/go-ristretto/edwards25519
 # github.com/cespare/xxhash/v2 v2.1.0
 github.com/cespare/xxhash/v2
+# github.com/coinbase/kryptology v1.8.0 => github.com/torusresearch/kryptology v1.5.6-0.20221115043855-bca2d4238be3
+github.com/coinbase/kryptology/internal
+github.com/coinbase/kryptology/pkg/core
+github.com/coinbase/kryptology/pkg/core/curves
+github.com/coinbase/kryptology/pkg/core/curves/native
+github.com/coinbase/kryptology/pkg/core/curves/native/bls12381
+github.com/coinbase/kryptology/pkg/core/curves/native/k256
+github.com/coinbase/kryptology/pkg/core/curves/native/k256/fp
+github.com/coinbase/kryptology/pkg/core/curves/native/k256/fq
+github.com/coinbase/kryptology/pkg/core/curves/native/p256
+github.com/coinbase/kryptology/pkg/core/curves/native/p256/fp
+github.com/coinbase/kryptology/pkg/core/curves/native/p256/fq
+github.com/coinbase/kryptology/pkg/core/curves/native/pasta/fp
+github.com/coinbase/kryptology/pkg/core/curves/native/pasta/fq
+github.com/coinbase/kryptology/pkg/sharing/v1
+# github.com/consensys/gnark-crypto v0.5.3
+github.com/consensys/gnark-crypto/ecc
+github.com/consensys/gnark-crypto/ecc/bls12-377
+github.com/consensys/gnark-crypto/ecc/bls12-377/fp
+github.com/consensys/gnark-crypto/ecc/bls12-377/fr
+github.com/consensys/gnark-crypto/ecc/bls12-377/fr/mimc
+github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower
+github.com/consensys/gnark-crypto/field
+github.com/consensys/gnark-crypto/internal/generator/config
+github.com/consensys/gnark-crypto/internal/parallel
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
 # github.com/deckarep/golang-set v0.0.0-20180603214616-504e848d77ea
@@ -75,6 +100,8 @@ github.com/konsorten/go-windows-terminal-sequences
 github.com/matttproud/golang_protobuf_extensions/pbutil
 # github.com/pborman/uuid v0.0.0-20170112150404-1b00554d8222
 github.com/pborman/uuid
+# github.com/pkg/errors v0.9.1
+github.com/pkg/errors
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
 # github.com/prometheus/client_golang v1.2.1
@@ -117,6 +144,8 @@ github.com/syndtr/goleveldb/leveldb/util
 # github.com/torusresearch/bijson v0.0.0-20200227065959-98da85656344
 github.com/torusresearch/bijson
 # golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97
+golang.org/x/crypto/blake2b
+golang.org/x/crypto/hkdf
 golang.org/x/crypto/pbkdf2
 golang.org/x/crypto/ripemd160
 golang.org/x/crypto/scrypt

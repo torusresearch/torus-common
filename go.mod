@@ -3,12 +3,13 @@ module github.com/torusresearch/torus-common
 go 1.13
 
 require (
-	filippo.io/edwards25519 v1.0.0
+	filippo.io/edwards25519 v1.0.0 // indirect
 	github.com/allegro/bigcache v1.2.1 // indirect
 	github.com/aristanetworks/goarista v0.0.0-20170210015632-ea17b1a17847 // indirect
 	github.com/btcsuite/btcd v0.21.0-beta.0.20201114000516-e9c7a5ac6401
-	github.com/bwesterb/go-ristretto v1.2.0
+	github.com/bwesterb/go-ristretto v1.2.0 // indirect
 	github.com/cespare/cp v0.1.0 // indirect
+	github.com/coinbase/kryptology v1.8.0
 	github.com/deckarep/golang-set v0.0.0-20180603214616-504e848d77ea // indirect
 	github.com/edsrzf/mmap-go v0.0.0-20160512033002-935e0e8a636c // indirect
 	github.com/ethereum/go-ethereum v1.8.20
@@ -39,3 +40,5 @@ require (
 	gopkg.in/urfave/cli.v1 v1.20.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
+
+replace github.com/coinbase/kryptology => github.com/torusresearch/kryptology v1.5.6-0.20221115043855-bca2d4238be3
