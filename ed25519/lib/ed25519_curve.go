@@ -1,10 +1,4 @@
-//
-// Copyright Coinbase, Inc. All Rights Reserved.
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-
-package curves
+package lib
 
 import (
 	"bytes"
@@ -18,8 +12,6 @@ import (
 	"filippo.io/edwards25519/field"
 	"github.com/bwesterb/go-ristretto"
 	ed "github.com/bwesterb/go-ristretto/edwards25519"
-
-	"github.com/coinbase/kryptology/internal"
 )
 
 type ScalarEd25519 struct {
@@ -234,7 +226,7 @@ func (s *ScalarEd25519) SetBigInt(x *big.Int) (Scalar, error) {
 
 func (s *ScalarEd25519) BigInt() *big.Int {
 	var ret big.Int
-	buf := internal.ReverseScalarBytes(s.value.Bytes())
+	buf := reverseScalarBytes(s.value.Bytes())
 	return ret.SetBytes(buf)
 }
 
@@ -783,4 +775,14 @@ func elligatorEncode(r0 *ed.FieldElement) *ed.FieldElement {
 	// d or -d-A if non-square
 	cselect(u, u, new(ed.FieldElement).Neg(u), wasSquare)
 	return u
+}
+
+func reverseScalarBytes(inBytes []byte) []byte {
+	outBytes := make([]byte, len(inBytes))
+
+	for i, j := 0, len(inBytes)-1; j >= 0; i, j = i+1, j-1 {
+		outBytes[i] = inBytes[j]
+	}
+
+	return outBytes
 }

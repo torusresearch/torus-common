@@ -2,20 +2,20 @@ package ed25519
 
 import (
 	"fmt"
-	ed25519 "github.com/coinbase/kryptology/pkg/sharing/v1"
 	"github.com/torusresearch/torus-common/common"
+	"github.com/torusresearch/torus-common/ed25519/lib"
 	"golang.org/x/crypto/sha3"
 )
 
 type EdwardsCurve struct {
-	*ed25519.Ed25519Curve
+	*lib.Ed25519Curve
 }
 
 // GeneratorOrder = 2^252 + 27742317777372353535851937790883648493 = 1000000000000000000000000000000014DEF9DEA2F79CD65812631A5CF5D3ED = Curve.N
 // FieldOrder = 2^255 - 19 = 7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFED = Curve.P
 
 var (
-	Curve = &EdwardsCurve{ed25519.Ed25519()}
+	Curve = &EdwardsCurve{lib.Ed25519()}
 	G     = common.Point{X: *Curve.Gx, Y: *Curve.Gy}
 	H     = HashToPoint(G.Y.Bytes())
 )
