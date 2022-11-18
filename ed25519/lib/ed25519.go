@@ -161,7 +161,7 @@ func (curve *Ed25519Curve) Neg(Bx, By *big.Int) (*big.Int, *big.Int, error) {
 }
 
 func (curve *Ed25519Curve) Hash(msg []byte) (*big.Int, *big.Int) {
-	data := new(PointEd25519).Hash(msg).ToAffineCompressed()
+	data := new(PointEd25519).Hash(msg).ToAffineUncompressed()
 	var xBytes, yBytes [32]byte
 	copy(xBytes[:], data[:32])
 	copy(yBytes[:], data[32:])
