@@ -52,10 +52,12 @@ func (curve *Ed25519Curve) Params() *elliptic.CurveParams {
 }
 
 func (curve *Ed25519Curve) IsOnCurve(x, y *big.Int) bool {
-	// ignore the x value since Ed25519 is canonical 32 bytes of y according to RFC 8032
-	// Set bytes returns an error if not a valid point
-	_, err := bigInt2Ed25519Point(y)
-	return err == nil
+	ed25519Curve := ED25519()
+	p, err := ed25519Curve.Point.Set(x, y)
+	if err != nil {
+		return false
+	}
+	return p.IsOnCurve()
 }
 
 func (curve *Ed25519Curve) Add(x1, y1, x2, y2 *big.Int) (*big.Int, *big.Int, error) {
@@ -161,7 +163,8 @@ func (curve *Ed25519Curve) Neg(Bx, By *big.Int) (*big.Int, *big.Int, error) {
 }
 
 func (curve *Ed25519Curve) Hash(msg []byte) (*big.Int, *big.Int) {
-	data := new(PointEd25519).Hash(msg).ToAffineUncompressed()
+	ed25519Curve := ED25519()
+	data := ed25519Curve.Point.Hash(msg).ToAffineUncompressed()
 	var xBytes, yBytes [32]byte
 	copy(xBytes[:], data[:32])
 	copy(yBytes[:], data[32:])
@@ -175,5 +178,11 @@ func bigInt2Ed25519Point(y *big.Int) (*ed.Point, error) {
 	b := y.Bytes()
 	var arr [32]byte
 	copy(arr[32-len(b):], b)
+	return ed.NewIdentityPoint().SetBytes(arr[:])
+}
+
+func bytesToPoint(b []byte) (*ed.Point, error) {
+	var arr [32]byte
+	copy(arr[:], b)
 	return ed.NewIdentityPoint().SetBytes(arr[:])
 }
