@@ -17,14 +17,29 @@ type Ed25519Curve struct {
 }
 
 func ed25519InitAll() {
+	generatorX, generatorY := getGenerator()
 	// taken from https://datatracker.ietf.org/doc/html/rfc8032
 	ed25519.CurveParams = new(elliptic.CurveParams)
 	ed25519.P, _ = new(big.Int).SetString("7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFED", 16)
 	ed25519.N, _ = new(big.Int).SetString("1000000000000000000000000000000014DEF9DEA2F79CD65812631A5CF5D3ED", 16)
-	ed25519.Gx = new(big.Int)
-	ed25519.Gy = new(big.Int).SetBytes(ed.NewGeneratorPoint().Bytes())
+	ed25519.Gx = generatorX
+	ed25519.Gy = generatorY
 	ed25519.BitSize = 255
 	ed25519.Name = "ed25519"
+}
+
+func getGenerator() (*big.Int, *big.Int) {
+	generator := ED25519().NewGeneratorPoint()
+	generatorBytes := generator.ToAffineUncompressed()
+	var genX, genY [32]byte
+	copy(genX[:], generatorBytes[:32])
+	copy(genY[:], generatorBytes[32:])
+
+	var x, y edwards25519.FieldElement
+	x.SetBytes(&genX)
+	y.SetBytes(&genY)
+
+	return x.BigInt(), y.BigInt()
 }
 
 func Ed25519() *Ed25519Curve {

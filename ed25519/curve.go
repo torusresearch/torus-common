@@ -17,7 +17,7 @@ type EdwardsCurve struct {
 var (
 	Curve = &EdwardsCurve{lib.Ed25519()}
 	G     = common.Point{X: *Curve.Gx, Y: *Curve.Gy}
-	H     = HashToPoint(G.Y.Bytes())
+	H     = HashToPoint(G.X.Bytes())
 )
 
 func HashToPoint(data []byte) common.Point {
