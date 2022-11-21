@@ -11,9 +11,6 @@ import (
 )
 
 var (
-	p256Initonce sync.Once
-	p256         Curve
-
 	ed25519CurveInitonce sync.Once
 	ed25519Curve         Curve
 )

@@ -5,8 +5,6 @@ import (
 	"github.com/bwesterb/go-ristretto/edwards25519"
 	"math/big"
 	"sync"
-
-	ed "filippo.io/edwards25519"
 )
 
 var ed25519Initonce sync.Once
@@ -172,17 +170,4 @@ func (curve *Ed25519Curve) Hash(msg []byte) (*big.Int, *big.Int) {
 	x.SetBytes(&xBytes)
 	y.SetBytes(&yBytes)
 	return x.BigInt(), y.BigInt()
-}
-
-func bigInt2Ed25519Point(y *big.Int) (*ed.Point, error) {
-	b := y.Bytes()
-	var arr [32]byte
-	copy(arr[32-len(b):], b)
-	return ed.NewIdentityPoint().SetBytes(arr[:])
-}
-
-func bytesToPoint(b []byte) (*ed.Point, error) {
-	var arr [32]byte
-	copy(arr[:], b)
-	return ed.NewIdentityPoint().SetBytes(arr[:])
 }

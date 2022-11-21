@@ -101,6 +101,7 @@ github.com/rs/xhandler
 github.com/sirupsen/logrus
 # github.com/stretchr/testify v1.7.0
 github.com/stretchr/testify/assert
+github.com/stretchr/testify/require
 # github.com/syndtr/goleveldb v1.0.1-0.20190923125748-758128399b1d
 github.com/syndtr/goleveldb/leveldb
 github.com/syndtr/goleveldb/leveldb/cache
