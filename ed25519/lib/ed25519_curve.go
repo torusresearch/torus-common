@@ -23,6 +23,7 @@ type PointEd25519 struct {
 }
 
 var scOne, _ = edwards25519.NewScalar().SetCanonicalBytes([]byte{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+var generatorOrder, _ = new(big.Int).SetString("1000000000000000000000000000000014DEF9DEA2F79CD65812631A5CF5D3ED", 16)
 
 func (s *ScalarEd25519) Random(reader io.Reader) Scalar {
 	if reader == nil {
@@ -131,9 +132,8 @@ func (s *ScalarEd25519) Invert() (Scalar, error) {
 }
 
 func (s *ScalarEd25519) Sqrt() (Scalar, error) {
-	bi25519, _ := new(big.Int).SetString("1000000000000000000000000000000014DEF9DEA2F79CD65812631A5CF5D3ED", 16)
 	x := s.BigInt()
-	x.ModSqrt(x, bi25519)
+	x.ModSqrt(x, generatorOrder)
 	return s.SetBigInt(x)
 }
 
@@ -210,9 +210,8 @@ func (s *ScalarEd25519) SetBigInt(x *big.Int) (Scalar, error) {
 		return nil, fmt.Errorf("invalid value")
 	}
 
-	bi25519, _ := new(big.Int).SetString("1000000000000000000000000000000014DEF9DEA2F79CD65812631A5CF5D3ED", 16)
 	var v big.Int
-	buf := v.Mod(x, bi25519).Bytes()
+	buf := v.Mod(x, generatorOrder).Bytes()
 	var rBuf [32]byte
 	for i := 0; i < len(buf) && i < 32; i++ {
 		rBuf[i] = buf[len(buf)-i-1]
@@ -700,8 +699,8 @@ func (p *PointEd25519) SetEdwardsPoint(pt *edwards25519.Point) *PointEd25519 {
 
 // Attempt to convert to an `EdwardsPoint`, using the supplied
 // choice of sign for the `EdwardsPoint`.
-// * `sign`: a `u8` donating the desired sign of the resulting
-//   `EdwardsPoint`.  `0` denotes positive and `1` negative.
+//   - `sign`: a `u8` donating the desired sign of the resulting
+//     `EdwardsPoint`.  `0` denotes positive and `1` negative.
 func toEdwards(u *ed.FieldElement, sign byte) *PointEd25519 {
 	one := new(ed.FieldElement).SetOne()
 	// To decompress the Montgomery u coordinate to an

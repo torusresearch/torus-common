@@ -2,9 +2,10 @@ package lib
 
 import (
 	"crypto/elliptic"
-	"github.com/bwesterb/go-ristretto/edwards25519"
 	"math/big"
 	"sync"
+
+	"github.com/bwesterb/go-ristretto/edwards25519"
 )
 
 var ed25519Initonce sync.Once
@@ -19,7 +20,7 @@ func ed25519InitAll() {
 	// taken from https://datatracker.ietf.org/doc/html/rfc8032
 	ed25519.CurveParams = new(elliptic.CurveParams)
 	ed25519.P, _ = new(big.Int).SetString("7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFED", 16)
-	ed25519.N, _ = new(big.Int).SetString("1000000000000000000000000000000014DEF9DEA2F79CD65812631A5CF5D3ED", 16)
+	ed25519.N = generatorOrder
 	ed25519.Gx = generatorX
 	ed25519.Gy = generatorY
 	ed25519.BitSize = 255
