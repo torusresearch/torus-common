@@ -9,10 +9,11 @@ package lib
 import (
 	crand "crypto/rand"
 	"encoding/hex"
-	"github.com/stretchr/testify/assert"
 	"math/big"
 	"sync"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 
 	ed "filippo.io/edwards25519"
 	"github.com/stretchr/testify/require"
@@ -104,7 +105,7 @@ func TestScalarEd25519Neg(t *testing.T) {
 func TestScalarEd25519Invert(t *testing.T) {
 	ed25519 := ED25519()
 	nine := ed25519.Scalar.New(9)
-	actual, _ := nine.Invert()
+	actual := nine.Invert()
 	sa, _ := actual.(*ScalarEd25519)
 	expected := toRSc("c3d9c4db0516043013b1e1ce8637dc92e3388ee3388ee3388ee3388ee3388e03")
 	require.Equal(t, sa.value.Equal(expected), 1)

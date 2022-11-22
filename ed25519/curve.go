@@ -2,6 +2,7 @@ package ed25519
 
 import (
 	"fmt"
+	"math/big"
 
 	"github.com/torusresearch/torus-common/ed25519/lib"
 	"golang.org/x/crypto/sha3"
@@ -24,6 +25,10 @@ func HashToPoint(data []byte) lib.Point {
 	return Curve.Hash(data)
 }
 
+func HashToScalar(data []byte) lib.Scalar {
+	return lib.ED25519().Scalar.Hash(data)
+}
+
 func Keccak256(data ...[]byte) []byte {
 	d := sha3.NewLegacyKeccak256()
 	for _, b := range data {
@@ -34,3 +39,12 @@ func Keccak256(data ...[]byte) []byte {
 	}
 	return d.Sum(nil)
 }
+
+func NewScalar(s *big.Int) (lib.Scalar, error) {
+	return lib.ED25519().Scalar.SetBigInt(s)
+}
+
+type Scalar = lib.Scalar
+type Point = lib.Point
+
+var ZeroScalar = lib.ED25519().Scalar.Zero()

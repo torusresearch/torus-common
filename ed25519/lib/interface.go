@@ -56,7 +56,7 @@ type Scalar interface {
 	// Double returns element+element
 	Double() Scalar
 	// Invert returns element^-1 mod p
-	Invert() (Scalar, error)
+	Invert() Scalar
 	// Sqrt computes the square root of this element if it exists.
 	Sqrt() (Scalar, error)
 	// Cube returns element*element*element

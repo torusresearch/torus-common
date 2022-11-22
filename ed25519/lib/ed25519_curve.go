@@ -125,10 +125,10 @@ func (s *ScalarEd25519) Double() Scalar {
 	}
 }
 
-func (s *ScalarEd25519) Invert() (Scalar, error) {
+func (s *ScalarEd25519) Invert() Scalar {
 	return &ScalarEd25519{
 		value: edwards25519.NewScalar().Invert(s.value),
-	}, nil
+	}
 }
 
 func (s *ScalarEd25519) Sqrt() (Scalar, error) {
