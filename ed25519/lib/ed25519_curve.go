@@ -210,13 +210,14 @@ func (s *ScalarEd25519) SetBigInt(x *big.Int) (Scalar, error) {
 		return nil, fmt.Errorf("invalid value")
 	}
 
-	var v big.Int
-	buf := v.Mod(x, generatorOrder).Bytes()
-	var rBuf [32]byte
-	for i := 0; i < len(buf) && i < 32; i++ {
-		rBuf[i] = buf[len(buf)-i-1]
+	// Convert big endian to little endian.
+	be := new(big.Int).Mod(x, generatorOrder).Bytes()
+	var le [32]byte
+	for i := 0; i < len(be) && i < 32; i++ {
+		le[i] = be[len(be)-i-1]
 	}
-	value, err := edwards25519.NewScalar().SetCanonicalBytes(rBuf[:])
+
+	value, err := edwards25519.NewScalar().SetCanonicalBytes(le[:])
 	if err != nil {
 		return nil, err
 	}
