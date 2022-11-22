@@ -2,7 +2,7 @@ package ed25519
 
 import (
 	"fmt"
-	"github.com/torusresearch/torus-common/common"
+
 	"github.com/torusresearch/torus-common/ed25519/lib"
 	"golang.org/x/crypto/sha3"
 )
@@ -16,12 +16,12 @@ type EdwardsCurve struct {
 
 var (
 	Curve = &EdwardsCurve{lib.Ed25519()}
-	G     = common.Point{X: *Curve.Gx, Y: *Curve.Gy}
-	H     = HashToPoint(G.X.Bytes())
+	G     = lib.ED25519().NewGeneratorPoint()
+	H     = HashToPoint(G.ToAffineCompressed())
 )
 
-func HashToPoint(data []byte) common.Point {
-	return common.BigIntToPoint(Curve.Hash(data))
+func HashToPoint(data []byte) lib.Point {
+	return Curve.Hash(data)
 }
 
 func Keccak256(data ...[]byte) []byte {
