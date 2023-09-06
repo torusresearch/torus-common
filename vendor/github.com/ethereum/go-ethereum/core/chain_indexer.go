@@ -19,6 +19,7 @@ package core
 import (
 	"context"
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"sync"
 	"sync/atomic"
@@ -46,6 +47,9 @@ type ChainIndexerBackend interface {
 
 	// Commit finalizes the section metadata and stores it into the database.
 	Commit() error
+
+	// Prune deletes the chain index older than the given threshold.
+	Prune(threshold uint64) error
 }
 
 // ChainIndexerChain interface is used for connecting the indexer to a blockchain
@@ -72,7 +76,7 @@ type ChainIndexer struct {
 	backend  ChainIndexerBackend // Background processor generating the index data content
 	children []*ChainIndexer     // Child indexers to cascade chain updates to
 
-	active    uint32          // Flag whether the event loop was started
+	active    atomic.Bool     // Flag whether the event loop was started
 	update    chan struct{}   // Notification channel that headers should be processed
 	quit      chan chan error // Quit channel to tear down running goroutines
 	ctx       context.Context
@@ -91,13 +95,13 @@ type ChainIndexer struct {
 	throttling time.Duration // Disk throttling to prevent a heavy upgrade from hogging resources
 
 	log  log.Logger
-	lock sync.RWMutex
+	lock sync.Mutex
 }
 
 // NewChainIndexer creates a new chain indexer to do background processing on
 // chain segments of a given size after certain number of confirmations passed.
 // The throttling parameter might be used to prevent database thrashing.
-func NewChainIndexer(chainDb, indexDb ethdb.Database, backend ChainIndexerBackend, section, confirm uint64, throttling time.Duration, kind string) *ChainIndexer {
+func NewChainIndexer(chainDb ethdb.Database, indexDb ethdb.Database, backend ChainIndexerBackend, section, confirm uint64, throttling time.Duration, kind string) *ChainIndexer {
 	c := &ChainIndexer{
 		chainDb:     chainDb,
 		indexDb:     indexDb,
@@ -128,12 +132,13 @@ func (c *ChainIndexer) AddCheckpoint(section uint64, shead common.Hash) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 
+	// Short circuit if the given checkpoint is below than local's.
+	if c.checkpointSections >= section+1 || section < c.storedSections {
+		return
+	}
 	c.checkpointSections = section + 1
 	c.checkpointHead = shead
 
-	if section < c.storedSections {
-		return
-	}
 	c.setSectionHead(section, shead)
 	c.setValidSections(section + 1)
 }
@@ -162,7 +167,7 @@ func (c *ChainIndexer) Close() error {
 		errs = append(errs, err)
 	}
 	// If needed, tear down the secondary event loop
-	if atomic.LoadUint32(&c.active) != 0 {
+	if c.active.Load() {
 		c.quit <- errc
 		if err := <-errc; err != nil {
 			errs = append(errs, err)
@@ -192,7 +197,7 @@ func (c *ChainIndexer) Close() error {
 // queue.
 func (c *ChainIndexer) eventLoop(currentHeader *types.Header, events chan ChainHeadEvent, sub event.Subscription) {
 	// Mark the chain indexer as active, requiring an additional teardown
-	atomic.StoreUint32(&c.active, 1)
+	c.active.Store(true)
 
 	defer sub.Unsubscribe()
 
@@ -243,7 +248,7 @@ func (c *ChainIndexer) newHead(head uint64, reorg bool) {
 	// If a reorg happened, invalidate all sections until that point
 	if reorg {
 		// Revert the known section number to the reorg point
-		known := head / c.sectionSize
+		known := (head + 1) / c.sectionSize
 		stored := known
 		if known < c.checkpointSections {
 			known = 0
@@ -323,6 +328,7 @@ func (c *ChainIndexer) updateLoop() {
 					updated = time.Now()
 				}
 				// Cache the current section count and head to allow unlocking the mutex
+				c.verifyLastHead()
 				section := c.storedSections
 				var oldHead common.Hash
 				if section > 0 {
@@ -342,8 +348,8 @@ func (c *ChainIndexer) updateLoop() {
 				}
 				c.lock.Lock()
 
-				// If processing succeeded and no reorgs occcurred, mark the section completed
-				if err == nil && oldHead == c.SectionHead(section-1) {
+				// If processing succeeded and no reorgs occurred, mark the section completed
+				if err == nil && (section == 0 || oldHead == c.SectionHead(section-1)) {
 					c.setSectionHead(section, newHead)
 					c.setValidSections(section + 1)
 					if c.storedSections == c.knownSections && updating {
@@ -358,6 +364,7 @@ func (c *ChainIndexer) updateLoop() {
 				} else {
 					// If processing failed, don't retry until further notification
 					c.log.Debug("Chain index processing failed", "section", section, "err", err)
+					c.verifyLastHead()
 					c.knownSections = c.storedSections
 				}
 			}
@@ -383,7 +390,6 @@ func (c *ChainIndexer) processSection(section uint64, lastHead common.Hash) (com
 	c.log.Trace("Processing new chain section", "section", section)
 
 	// Reset and partial processing
-
 	if err := c.backend.Reset(c.ctx, section, lastHead); err != nil {
 		c.setValidSections(0)
 		return common.Hash{}, err
@@ -396,9 +402,9 @@ func (c *ChainIndexer) processSection(section uint64, lastHead common.Hash) (com
 		}
 		header := rawdb.ReadHeader(c.chainDb, hash, number)
 		if header == nil {
-			return common.Hash{}, fmt.Errorf("block #%d [%x…] not found", number, hash[:4])
+			return common.Hash{}, fmt.Errorf("block #%d [%x..] not found", number, hash[:4])
 		} else if header.ParentHash != lastHead {
-			return common.Hash{}, fmt.Errorf("chain reorged during section processing")
+			return common.Hash{}, errors.New("chain reorged during section processing")
 		}
 		if err := c.backend.Process(c.ctx, header); err != nil {
 			return common.Hash{}, err
@@ -411,6 +417,18 @@ func (c *ChainIndexer) processSection(section uint64, lastHead common.Hash) (com
 	return lastHead, nil
 }
 
+// verifyLastHead compares last stored section head with the corresponding block hash in the
+// actual canonical chain and rolls back reorged sections if necessary to ensure that stored
+// sections are all valid
+func (c *ChainIndexer) verifyLastHead() {
+	for c.storedSections > 0 && c.storedSections > c.checkpointSections {
+		if c.SectionHead(c.storedSections-1) == rawdb.ReadCanonicalHash(c.chainDb, c.storedSections*c.sectionSize-1) {
+			return
+		}
+		c.setValidSections(c.storedSections - 1)
+	}
+}
+
 // Sections returns the number of processed sections maintained by the indexer
 // and also the information about the last header indexed for potential canonical
 // verifications.
@@ -418,11 +436,15 @@ func (c *ChainIndexer) Sections() (uint64, uint64, common.Hash) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 
+	c.verifyLastHead()
 	return c.storedSections, c.storedSections*c.sectionSize - 1, c.SectionHead(c.storedSections - 1)
 }
 
 // AddChildIndexer adds a child ChainIndexer that can use the output of this one
 func (c *ChainIndexer) AddChildIndexer(indexer *ChainIndexer) {
+	if indexer == c {
+		panic("can't add indexer as a child of itself")
+	}
 	c.lock.Lock()
 	defer c.lock.Unlock()
 
@@ -438,6 +460,11 @@ func (c *ChainIndexer) AddChildIndexer(indexer *ChainIndexer) {
 	if sections > 0 {
 		indexer.newHead(sections*c.sectionSize-1, false)
 	}
+}
+
+// Prune deletes all chain data older than given threshold.
+func (c *ChainIndexer) Prune(threshold uint64) error {
+	return c.backend.Prune(threshold)
 }
 
 // loadValidSections reads the number of valid sections from the index database
