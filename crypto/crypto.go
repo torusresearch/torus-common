@@ -188,3 +188,20 @@ func PointToEthAddress(point common.Point) *ethCommon.Address {
 	addr := crypto.PubkeyToAddress(*PointToECDSAPublicKey(point))
 	return &addr
 }
+
+func VerifySignature(pubKey ecdsa.PublicKey, msgHash [32]byte, signature string) bool {
+	recNodeSig := HexToSig(signature)
+	if recNodeSig.V >= 27 {
+		recNodeSig.V -= 27
+	}
+	recoveredNodeSig := Signature{
+		Raw:  recNodeSig.Raw,
+		Hash: msgHash,
+		R:    recNodeSig.R,
+		S:    recNodeSig.S,
+		V:    recNodeSig.V,
+	}
+
+	valid := IsValidSignature(pubKey, recoveredNodeSig)
+	return valid
+}
