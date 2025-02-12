@@ -6,6 +6,7 @@ import (
 	"math/big"
 
 	"github.com/btcsuite/btcd/btcec/v2"
+	"github.com/ethereum/go-ethereum/crypto/ecies"
 	"github.com/torusresearch/torus-common/common"
 	"golang.org/x/crypto/sha3"
 )
@@ -62,15 +63,20 @@ func Keccak256(data ...[]byte) []byte {
 }
 
 func Encrypt(pubKey common.Point, input []byte) (encryptedOutput []byte, err error) {
-	return btcec.Encrypt(&btcec.PublicKey{
-		Curve: Curve,
+	pub := &ecies.PublicKey{
 		X:     &pubKey.X,
 		Y:     &pubKey.Y,
-	}, input)
+		Curve: Curve,
+	}
+	return ecies.Encrypt(rand.Reader, pub, input, nil, nil)
 }
 
 func Decrypt(privKey big.Int, input []byte) (decryptedOutput []byte, err error) {
-	return btcec.Decrypt(&btcec.PrivateKey{
+	priv := &ecies.PrivateKey{
+		PublicKey: ecies.PublicKey{
+			Curve: Curve,
+		},
 		D: &privKey,
-	}, input)
+	}
+	return priv.Decrypt(input, nil, nil)
 }
