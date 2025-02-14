@@ -5,17 +5,18 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/btcsuite/btcd/btcec"
+	secp256k1Curve "github.com/ethereum/go-ethereum/crypto/secp256k1"
+
 	"github.com/torusresearch/torus-common/common"
 	"golang.org/x/crypto/sha3"
 )
 
 type KoblitzCurve struct {
-	*btcec.KoblitzCurve
+	*secp256k1Curve.BitCurve
 }
 
 var (
-	Curve = &KoblitzCurve{btcec.S256()}
+	Curve = &KoblitzCurve{secp256k1Curve.S256()}
 	// field order, also known as p, usually used for scalars
 	FieldOrder = common.HexToBigInt("fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f")
 	// group order, also known as q, it is the number of points in the curve, and is usually used in exponents
@@ -62,7 +63,7 @@ func Keccak256(data ...[]byte) []byte {
 }
 
 func Encrypt(pubKey common.Point, input []byte) (encryptedOutput []byte, err error) {
-	return btcec.Encrypt(&btcec.PublicKey{
+	return EciesEncrypt(&PublicKey{
 		Curve: Curve,
 		X:     &pubKey.X,
 		Y:     &pubKey.Y,
@@ -70,7 +71,7 @@ func Encrypt(pubKey common.Point, input []byte) (encryptedOutput []byte, err err
 }
 
 func Decrypt(privKey big.Int, input []byte) (decryptedOutput []byte, err error) {
-	return btcec.Decrypt(&btcec.PrivateKey{
+	return EciesDecrypt(&PrivateKey{
 		D: &privKey,
 	}, input)
 }
