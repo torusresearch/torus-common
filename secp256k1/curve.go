@@ -1,11 +1,13 @@
 package secp256k1
 
 import (
+	"crypto/ecdsa"
 	"crypto/rand"
 	"fmt"
 	"math/big"
 
 	"github.com/btcsuite/btcd/btcec/v2"
+	"github.com/ethereum/go-ethereum/crypto/ecies"
 	"github.com/torusresearch/torus-common/common"
 	"golang.org/x/crypto/sha3"
 )
@@ -62,15 +64,37 @@ func Keccak256(data ...[]byte) []byte {
 }
 
 func Encrypt(pubKey common.Point, input []byte) (encryptedOutput []byte, err error) {
-	return btcec.Encrypt(&btcec.PublicKey{
-		Curve: Curve,
+	// Convert to ECDSA public key first
+	ecdsaPub := &ecdsa.PublicKey{
+		Curve: btcec.S256(),
 		X:     &pubKey.X,
 		Y:     &pubKey.Y,
-	}, input)
+	}
+
+	// Convert to ecies public key and set parameters
+	pub := ecies.ImportECDSAPublic(ecdsaPub)
+	pub.Params = ecies.ECIES_AES128_SHA256 // Use standard parameters
+
+	// Encrypt using ECIES
+	return ecies.Encrypt(rand.Reader, pub, input, nil, nil)
 }
 
 func Decrypt(privKey big.Int, input []byte) (decryptedOutput []byte, err error) {
-	return btcec.Decrypt(&btcec.PrivateKey{
+	// Convert to ECDSA private key first
+	ecdsaPriv := &ecdsa.PrivateKey{
+		PublicKey: ecdsa.PublicKey{
+			Curve: btcec.S256(),
+		},
 		D: &privKey,
-	}, input)
+	}
+
+	// Calculate public key components
+	ecdsaPriv.PublicKey.X, ecdsaPriv.PublicKey.Y = btcec.S256().ScalarBaseMult(privKey.Bytes())
+
+	// Convert to ecies private key and set parameters
+	priv := ecies.ImportECDSA(ecdsaPriv)
+	priv.Params = ecies.ECIES_AES128_SHA256 // Use standard parameters
+
+	// Decrypt using ECIES
+	return priv.Decrypt(input, nil, nil)
 }
